@@ -1,30 +1,79 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prompt Builder</title><link rel="stylesheet" href="style.css"></head>
-<body><main class="wrap">
-<p><a href="projects.html">← Projects</a></p><h1>Prompt Builder</h1>
-<p class="mut">Pick a task, fill in the details, and copy the generated prompt into any LLM.</p>
-<div class="step"><h3>1. Task type</h3><select id="task"><option>Write</option><option>Summarize</option><option>Analyze</option><option>Brainstorm</option><option>Code</option><option>Edit / rewrite</option></select></div>
-<div class="step"><h3>2. Goal &amp; context</h3><label>Goal</label><input id="goal" placeholder="Start with an action verb, e.g. Draft a cover letter for…"><label>Context</label><textarea id="ctx" placeholder="Background the model wouldn't know"></textarea></div>
-<div class="step"><h3>3. Task details</h3><label>Role</label><input id="role" placeholder="e.g. a senior editor"><label>Output format</label><input id="fmt" placeholder="e.g. bullet list, table"><label>Length</label><select id="len"><option value="">Any</option><option>Brief</option><option>Medium</option><option>Detailed</option></select><label>Tone</label><select id="tone"><option value="">Any</option><option>Formal</option><option>Casual</option><option>Technical</option><option>Friendly</option></select></div>
-<div class="step"><h3>4. Examples &amp; requirements</h3><label>Examples</label><textarea id="ex"></textarea><label>Requirements (one per line)</label><textarea id="req"></textarea></div>
-<div class="step"><h3>5. Technique</h3><select id="tech"><option value="">None</option><option value="Think step by step before answering.">Step-by-step reasoning</option><option value="Ask me clarifying questions before you begin.">Clarify first</option><option value="Draft, critique your draft, then give a final version.">Draft &amp; critique</option></select></div>
-<h2>Your prompt</h2><div id="out"></div><p><button id="copy">Copy prompt</button><button class="sec" id="clear">Clear form</button></p>
-<h3>Prompt check</h3><div id="check"></div>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prompt Builder | Cameron Peterson</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<section class="band"><div class="wrap">
+  <a class="eyebrow" href="projects.html">AI Prompting Toolkit</a>
+  <h1>Prompt Builder</h1>
+  <p class="lede">Pick a task, fill in what you know, and copy the result into any LLM. Each prompt gets a role, specific context, a clear instruction, an explicit output format, examples, and a reasoning technique matched to the task.</p>
+</div></section>
+<section class="band"><div class="wrap tk">
+  <div>
+    <div class="step"><p class="label">01 — Task type</p><div class="chips" id="tasks"></div><p class="hint" id="taskhint"></p></div>
+    <div class="step"><p class="label">02 — Goal &amp; context</p>
+      <label class="field"><span>Goal <em>one sentence, starting with an action verb</em></span><input id="goal" placeholder="e.g. Write a cover letter for a product analyst role"></label>
+      <label class="field"><span>Context <em>background the model can't know</em></span><textarea id="ctx" placeholder="e.g. I'm a recent grad with two internships in data analysis…"></textarea></label>
+    </div>
+    <div class="step"><p class="label">03 — Task details</p>
+      <label class="field"><span>Role <em>who the model should act as</em></span><input id="role"></label>
+      <label class="field"><span>Output format</span><input id="fmt" placeholder="e.g. bullet list, table, one paragraph"></label>
+      <label class="field"><span>Length</span><select id="len"><option value="">No preference</option><option>Brief (under 150 words)</option><option>Medium (150–400 words)</option><option>Detailed (400+ words)</option></select></label>
+      <label class="field"><span>Tone</span><select id="tone"><option value="">No preference</option><option>Professional</option><option>Conversational</option><option>Technical</option><option>Persuasive</option></select></label>
+    </div>
+    <div class="step"><p class="label">04 — Examples &amp; requirements</p>
+      <label class="field"><span>Examples <em>show what good looks like</em></span><textarea id="ex"></textarea></label>
+      <label class="field"><span>Requirements <em>one per line</em></span><textarea id="req"></textarea></label>
+    </div>
+    <div class="step"><p class="label">05 — Technique</p>
+      <label class="field"><span>Reasoning technique</span><select id="tech">
+        <option value="">None</option>
+        <option value="Think through the problem step by step before giving your final answer.">Step-by-step reasoning</option>
+        <option value="If anything essential is missing or ambiguous, ask me up to 3 clarifying questions before you start. Otherwise, proceed and list any assumptions you made.">Clarify first</option>
+        <option value="Write a first draft, critique it against the requirements, then give a revised final version.">Draft, critique, revise</option>
+        <option value="Generate 3 distinct options, compare their trade-offs, then recommend one.">Compare options</option>
+      </select></label>
+    </div>
+  </div>
+  <aside class="out">
+    <div class="outhead"><p class="label">Your prompt</p><span id="wc"></span></div>
+    <pre id="out"></pre>
+    <div class="actions"><button class="btn solid" id="copy">Copy prompt</button><button class="btn ghost" id="clear">Clear form</button></div>
+    <p class="label">Prompt check</p><ul id="check"></ul>
+  </aside>
+</div></section>
 </main><script src="site.js"></script><script>
 shell("Projects");
-const $=i=>document.getElementById(i),ids=["task","goal","ctx","role","fmt","len","tone","ex","req","tech"];
-function build(){const v=Object.fromEntries(ids.map(i=>[i,$(i).value.trim()]));let p=[];
-if(v.role)p.push(`You are ${v.role}.`);
-p.push(`Task (${v.task}): ${v.goal||"[goal]"}`);
-if(v.ctx)p.push(`Context:\n${v.ctx}`);
-if(v.fmt)p.push(`Output format: ${v.fmt}`);
-if(v.len)p.push(`Length: ${v.len}`);if(v.tone)p.push(`Tone: ${v.tone}`);
-if(v.req)p.push("Requirements:\n"+v.req.split("\n").filter(Boolean).map(r=>"- "+r).join("\n"));
-if(v.ex)p.push(`Examples:\n${v.ex}`);if(v.tech)p.push(v.tech);
-$("out").textContent=p.join("\n\n");
-const c=[];if(!v.goal)c.push("Add a goal.");if(v.goal&&!/^[A-Z][a-z]+/.test(v.goal))c.push("Start the goal with an action verb.");
-if(!v.ctx)c.push("Add context the model can't guess.");if(!v.fmt)c.push("Specify an output format.");
-$("check").textContent=c.length?c.join(" "):"Looks good.";}
-ids.forEach(i=>$(i).addEventListener("input",build));build();
-$("copy").onclick=()=>navigator.clipboard.writeText($("out").textContent);
-$("clear").onclick=()=>{ids.forEach(i=>$(i).value=i=="task"?"Write":"");build()};
+const T=[
+ ["Write / edit","an experienced editor who writes clearly and concisely","Draft or tighten a piece of writing."],
+ ["Summarize","an analyst who distills long material into its key points","Condense a document, article or thread."],
+ ["Analyze / decide","a strategic advisor who weighs trade-offs rigorously","Break down a decision or a set of options."],
+ ["Brainstorm","a creative collaborator who generates varied, original ideas","Generate a wide range of ideas, then narrow them."],
+ ["Write code","a senior software engineer who writes clean, tested code","Build a function, script or feature."],
+ ["Debug","a senior engineer who diagnoses bugs methodically","Find and fix what's going wrong."],
+ ["Explain","a patient teacher who explains concepts plainly","Understand a concept or a piece of material."],
+ ["Job application","a career coach and recruiter","Tailor a resume, cover letter or interview answer."]];
+const $=i=>document.getElementById(i),F=["goal","ctx","role","fmt","len","tone","ex","req","tech"];let cur=0;
+$("tasks").innerHTML=T.map((t,i)=>`<button class="chip" type="button" aria-pressed="${i==0}" data-i="${i}">${t[0]}</button>`).join("");
+function pick(i){cur=i;document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.i==i));$("taskhint").textContent=T[i][2];$("role").placeholder="e.g. "+T[i][1];build()}
+$("tasks").onclick=e=>{const b=e.target.closest(".chip");if(b)pick(+b.dataset.i)};
+function build(){const v=Object.fromEntries(F.map(i=>[i,$(i).value.trim()]));const p=[];
+ p.push("# Role\nYou are "+(v.role||T[cur][1])+".");
+ p.push("# Task\n"+(v.goal||"[Your goal: one sentence starting with an action verb]"));
+ if(v.ctx)p.push("# Context\n"+v.ctx);
+ if(v.tech)p.push("# Approach\n"+v.tech);
+ const o=[v.fmt&&"Format: "+v.fmt,v.len&&"Length: "+v.len,v.tone&&"Tone: "+v.tone].filter(Boolean);
+ if(o.length)p.push("# Output format\n"+o.join("\n"));
+ if(v.req)p.push("# Requirements\n"+v.req.split("\n").filter(Boolean).map(r=>"- "+r).join("\n"));
+ if(v.ex)p.push("# Examples\n"+v.ex);
+ const txt=p.join("\n\n");$("out").textContent=txt;$("wc").textContent=txt.split(/\s+/).filter(Boolean).length+" words";
+ const c=[];
+ if(!v.goal)c.push("Add a goal: one sentence saying exactly what you want.");
+ else if(!/^[A-Z][a-z]+\b/.test(v.goal))c.push("Start the goal with an action verb (Write, List, Compare…).");
+ if(!v.ctx)c.push("Add context. Background the model can't know makes the output specific to you.");
+ if(!v.fmt)c.push("Name an output format so the answer comes back in a usable shape.");
+ if(!v.ex)c.push("No example yet. One good example is often the most effective addition.");
+ if(!v.len)c.push("Specify a length so the output is the size you need.");
+ $("check").innerHTML=c.length?c.map(x=>`<li>${x}</li>`).join(""):`<li class="ok">Looks complete. Copy it into your LLM.</li>`;}
+F.forEach(i=>$(i).addEventListener("input",build));
+$("copy").onclick=async()=>{try{await navigator.clipboard.writeText($("out").textContent);$("copy").textContent="Copied";setTimeout(()=>$("copy").textContent="Copy prompt",1500)}catch{getSelection().selectAllChildren($("out"))}};
+$("clear").onclick=()=>{F.forEach(i=>$(i).value="");pick(0)};
+pick(0);
 </script></body></html>
