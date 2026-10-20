@@ -1,9 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap");
 /* Warm editorial: Lora for reading, Space Mono for labels/nav/buttons, hairline-divided sections */
-:root{--bg:#fff;--fg:#3a2a1f;--mut:#7a6a5c;--rust:#b5502e;--ochre:#8a5a1f;--gold:#c8862b;--wine:#7a2e2e;--cream:#faf3ea;--sand:#ecd9c2;--line:#eee8e1;
-  --serif:Lora,Georgia,serif;--mono:"Space Mono","Courier New",monospace}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a1511;--fg:#eadfd3;--mut:#a8988a;--rust:#e07a52;--ochre:#d9a35a;--gold:#e0a64f;--wine:#d98080;--cream:#251d17;--sand:#4a3a2c;--line:#2e2620;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1a1511;--fg:#eadfd3;--mut:#a8988a;--rust:#e07a52;--ochre:#d9a35a;--gold:#e0a64f;--wine:#d98080;--cream:#251d17;--sand:#4a3a2c;--line:#2e2620;color-scheme:dark}
+/* Always white, like Ian's. Forest green for headings/chips, ocean blue for links/nav/actions. */
+:root{--bg:#ffffff;--fg:#1e2b26;--mut:#5c6a64;--rust:#1b6a96;--ochre:#2e5e3e;--gold:#2f7f8a;--wine:#234a30;--cream:#f4f8f6;--sand:#d3e2da;--line:#e9efec;
+  --serif:Lora,Georgia,serif;--mono:"Space Mono","Courier New",monospace;color-scheme:light}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.5 var(--serif)}
 .wrap{max-width:1000px;margin:0 auto;padding-left:max(64px,env(safe-area-inset-left,0px));padding-right:max(64px,env(safe-area-inset-right,0px))}
