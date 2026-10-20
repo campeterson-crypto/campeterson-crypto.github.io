@@ -1,0 +1,30 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prompt Builder</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="wrap">
+<p><a href="projects.html">← Projects</a></p><h1>Prompt Builder</h1>
+<p class="mut">Pick a task, fill in the details, and copy the generated prompt into any LLM.</p>
+<div class="step"><h3>1. Task type</h3><select id="task"><option>Write</option><option>Summarize</option><option>Analyze</option><option>Brainstorm</option><option>Code</option><option>Edit / rewrite</option></select></div>
+<div class="step"><h3>2. Goal &amp; context</h3><label>Goal</label><input id="goal" placeholder="Start with an action verb, e.g. Draft a cover letter for…"><label>Context</label><textarea id="ctx" placeholder="Background the model wouldn't know"></textarea></div>
+<div class="step"><h3>3. Task details</h3><label>Role</label><input id="role" placeholder="e.g. a senior editor"><label>Output format</label><input id="fmt" placeholder="e.g. bullet list, table"><label>Length</label><select id="len"><option value="">Any</option><option>Brief</option><option>Medium</option><option>Detailed</option></select><label>Tone</label><select id="tone"><option value="">Any</option><option>Formal</option><option>Casual</option><option>Technical</option><option>Friendly</option></select></div>
+<div class="step"><h3>4. Examples &amp; requirements</h3><label>Examples</label><textarea id="ex"></textarea><label>Requirements (one per line)</label><textarea id="req"></textarea></div>
+<div class="step"><h3>5. Technique</h3><select id="tech"><option value="">None</option><option value="Think step by step before answering.">Step-by-step reasoning</option><option value="Ask me clarifying questions before you begin.">Clarify first</option><option value="Draft, critique your draft, then give a final version.">Draft &amp; critique</option></select></div>
+<h2>Your prompt</h2><div id="out"></div><p><button id="copy">Copy prompt</button><button class="sec" id="clear">Clear form</button></p>
+<h3>Prompt check</h3><div id="check"></div>
+</main><script src="site.js"></script><script>
+shell("Projects");
+const $=i=>document.getElementById(i),ids=["task","goal","ctx","role","fmt","len","tone","ex","req","tech"];
+function build(){const v=Object.fromEntries(ids.map(i=>[i,$(i).value.trim()]));let p=[];
+if(v.role)p.push(`You are ${v.role}.`);
+p.push(`Task (${v.task}): ${v.goal||"[goal]"}`);
+if(v.ctx)p.push(`Context:\n${v.ctx}`);
+if(v.fmt)p.push(`Output format: ${v.fmt}`);
+if(v.len)p.push(`Length: ${v.len}`);if(v.tone)p.push(`Tone: ${v.tone}`);
+if(v.req)p.push("Requirements:\n"+v.req.split("\n").filter(Boolean).map(r=>"- "+r).join("\n"));
+if(v.ex)p.push(`Examples:\n${v.ex}`);if(v.tech)p.push(v.tech);
+$("out").textContent=p.join("\n\n");
+const c=[];if(!v.goal)c.push("Add a goal.");if(v.goal&&!/^[A-Z][a-z]+/.test(v.goal))c.push("Start the goal with an action verb.");
+if(!v.ctx)c.push("Add context the model can't guess.");if(!v.fmt)c.push("Specify an output format.");
+$("check").textContent=c.length?c.join(" "):"Looks good.";}
+ids.forEach(i=>$(i).addEventListener("input",build));build();
+$("copy").onclick=()=>navigator.clipboard.writeText($("out").textContent);
+$("clear").onclick=()=>{ids.forEach(i=>$(i).value=i=="task"?"Write":"");build()};
+</script></body></html>

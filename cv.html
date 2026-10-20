@@ -1,0 +1,2 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CV</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="wrap" id="m"></main><script src="site.js"></script><script>shell("CV");m.innerHTML=`<h1>CV</h1><ul class="list">${SITE.cv.map(c=>`<li><b>${c.role}</b>, ${c.org} <span class="mut">${c.when}</span><br>${c.note}</li>`).join("")}</ul>`</script></body></html>

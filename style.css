@@ -1,0 +1,19 @@
+:root{--bg:#fbfaf7;--fg:#1d1d1b;--mut:#6b6a65;--acc:#2b4c7e;--line:#e4e1d8}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161614;--fg:#ecebe6;--mut:#9a988f;--acc:#8fb0e6;--line:#2c2b27;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#161614;--fg:#ecebe6;--mut:#9a988f;--acc:#8fb0e6;--line:#2c2b27;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 Georgia,serif}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{border-bottom:1px solid var(--line)}header .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:16px}
+header img{width:44px;height:44px;border-radius:50%;object-fit:cover;background:var(--line)}
+header .name{font-weight:bold;margin-right:auto}nav a{margin-left:16px;font:15px system-ui,sans-serif}
+a{color:var(--acc)}h1{font-size:2rem;line-height:1.2}h2{margin-top:2rem}
+.mut{color:var(--mut)}ul.list{padding-left:1.1em}ul.list li{margin:.6em 0}
+footer{border-top:1px solid var(--line);margin-top:3rem;padding:20px 0;font:14px system-ui,sans-serif;color:var(--mut)}
+.step{border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:14px 0}
+.step h3{margin:0 0 8px;font:600 15px system-ui,sans-serif}
+label{display:block;font:14px system-ui,sans-serif;margin:8px 0 3px;color:var(--mut)}
+input,select,textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--fg);font:15px system-ui,sans-serif}
+textarea{min-height:70px}button{padding:8px 14px;border:1px solid var(--acc);background:var(--acc);color:var(--bg);border-radius:6px;font:15px system-ui,sans-serif;cursor:pointer;margin-right:8px}
+button.sec{background:none;color:var(--acc)}
+#out{white-space:pre-wrap;border:1px solid var(--line);border-radius:8px;padding:14px;font:14px/1.5 ui-monospace,monospace;min-height:80px}
+#check{font:14px system-ui,sans-serif;color:var(--mut)}

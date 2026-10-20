@@ -1,0 +1,2 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Essays</title><link rel="stylesheet" href="style.css"></head>
+<body><main class="wrap" id="m"></main><script src="site.js"></script><script>shell("Essays");m.innerHTML=`<h1>Essays</h1>${SITE.essays.length?`<ul class="list">${SITE.essays.map(e=>`<li><a href="${e.url}">${e.title}</a> <span class="mut">${e.date||""}</span></li>`).join("")}</ul>`:"<p class=mut>Coming soon.</p>"}`</script></body></html>
