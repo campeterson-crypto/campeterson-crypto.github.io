@@ -1,2 +1,26 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Essays | Cameron Peterson</title><link rel="stylesheet" href="style.css?v=3"></head>
-<body><main id="m"></main><script src="site.js?v=2"></script><script>shell("Essays");m.innerHTML=band(`<p class="eyebrow">Essays</p><h1>Writing</h1>${SITE.essays.length?`<ul class="items">${SITE.essays.map(e=>`<li><span class="when">${e.date||""}</span><br><a class="t" href="${e.url}">${e.title}</a></li>`).join("")}</ul>`:`<p class="lede">Coming soon.</p>`}`)</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Essays | Cameron Peterson</title>
+<meta name="description" content="Essays and writing by Cameron Peterson.">
+<link rel="canonical" href="https://campeterson-crypto.github.io/essays.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cameron Peterson">
+<meta property="og:title" content="Essays | Cameron Peterson">
+<meta property="og:description" content="Essays and writing by Cameron Peterson.">
+<meta property="og:url" content="https://campeterson-crypto.github.io/essays.html">
+<meta property="og:image" content="https://campeterson-crypto.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cameron Peterson, personal site">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body><main id="m"></main><script src="site.js?v=4"></script><script>
+shell("Essays");
+m.innerHTML=band(`<p class="eyebrow">Essays</p><h1>Writing</h1>${SITE.essays.length?`<ul class="items">${SITE.essays.map(e=>`<li><span class="when">${e.date||""}</span><br><a class="t" href="${e.url}">${e.title}</a></li>`).join("")}</ul>`:`<p class="lede">The first essay is on its way. In the meantime, try the <a href="toolkit.html">Prompt Builder</a>.</p>`}`);
+</script></body></html>

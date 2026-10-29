@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cover Letter Builder | Cameron Peterson</title>
+<meta name="description" content="Paste a job description and your background to get a prompt that writes a specific, non-generic cover letter.">
+<link rel="canonical" href="https://campeterson-crypto.github.io/cover-letter.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cameron Peterson">
+<meta property="og:title" content="Cover Letter Builder | Cameron Peterson">
+<meta property="og:description" content="Paste a job description and your background to get a prompt that writes a specific, non-generic cover letter.">
+<meta property="og:url" content="https://campeterson-crypto.github.io/cover-letter.html">
+<meta property="og:image" content="https://campeterson-crypto.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cameron Peterson, personal site">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body><main id="m">
+<section class="band"><div class="wrap">
+  <a class="crumb" href="projects.html">← Projects</a><br>
+  <a class="eyebrow" href="projects.html">AI Prompting Toolkit</a>
+  <h1>Cover Letter Builder</h1>
+  <p class="lede">Paste the job description and your background, and get a prompt that makes an LLM write a specific cover letter instead of a generic one. It matches your evidence to the job's top requirements and refuses to invent experience. Nothing you type leaves your browser.</p>
+</div></section>
+<section class="band"><div class="wrap tk">
+  <div>
+    <div class="step"><p class="label">01 — The role</p>
+      <label class="field"><span>Job title</span><input id="title" placeholder="e.g. Business Analyst"></label>
+      <label class="field"><span>Company</span><input id="company" placeholder="e.g. Hawaiian Electric"></label>
+      <label class="field"><span>Job description <em>paste the whole posting</em></span><textarea id="jd" style="min-height:140px" placeholder="Responsibilities, requirements, nice-to-haves…"></textarea></label>
+    </div>
+    <div class="step"><p class="label">02 — You</p>
+      <label class="field"><span>Relevant experience <em>roles, results with numbers, skills</em></span><textarea id="bg" style="min-height:120px" placeholder="e.g. Analyst intern at X (2025): built a weekly sales dashboard in Excel used by 12 managers; cut reporting time 40%…"></textarea></label>
+      <label class="field"><span>Why this role or company <em>something specific, not "great culture"</em></span><textarea id="why" placeholder="e.g. Their grid modernization work connects to my senior project on solar adoption…"></textarea></label>
+      <label class="field"><span>Your name <em>for the sign-off</em></span><input id="name" placeholder="e.g. Cameron Peterson"></label>
+    </div>
+    <div class="step"><p class="label">03 — Style</p>
+      <label class="field"><span>Tone</span><select id="tone"><option>Professional and warm</option><option>Confident and direct</option><option>Enthusiastic</option><option>Formal</option></select></label>
+      <label class="field"><span>Length</span><select id="len"><option value="about 200 words, 3 short paragraphs">Short (~200 words)</option><option value="about 300 words, 3–4 paragraphs" selected>Standard (~300 words)</option><option value="about 400 words, 4 paragraphs, no more than one page">Full page (~400 words)</option></select></label>
+      <label class="field"><span>Anything to avoid or include <em>optional, one per line</em></span><textarea id="extra" placeholder="Mention I'm relocating to Honolulu in June&#10;Don't mention my GPA"></textarea></label>
+    </div>
+  </div>
+  <aside class="out" aria-label="Generated prompt">
+    <div class="outhead"><p class="label">Your prompt</p><span class="wc" id="wc"></span></div>
+    <pre id="out" aria-live="polite"></pre>
+    <div class="actions"><button class="btn solid" id="copy" type="button">Copy prompt</button><button class="btn ghost" id="clear" type="button">Clear form</button></div>
+    <p class="label">Prompt check</p><ul class="checks" id="check"></ul>
+  </aside>
+</div></section>
+</main>
+<script src="site.js?v=4"></script><script>
+shell("Projects");
+const $=i=>document.getElementById(i),F=["title","company","jd","bg","why","name","tone","len","extra"];
+function build(){
+  const v=Object.fromEntries(F.map(i=>[i,$(i).value.trim()]));
+  const role=v.title||"[job title]",co=v.company||"[company]";
+  const p=[
+"# Role\nYou are an experienced recruiter and career coach who has read thousands of cover letters and knows what makes a hiring manager keep reading.",
+`# Task\nWrite a cover letter for the ${role} role at ${co}.`,
+"# Job description\n"+(v.jd||"[Paste the job description]"),
+"# My background\n"+(v.bg||"[Your relevant experience, with results and numbers]")];
+  if(v.why)p.push("# Why I want this role\n"+v.why);
+  p.push(`# Approach
+1. Identify the 3 requirements in the job description that matter most for this role.
+2. Match each one to specific evidence from my background, using the numbers I gave.
+3. Open with a specific hook about the role or ${co}, not "I am writing to apply for…".
+4. Before finishing, cut any sentence that could appear in anyone else's cover letter.
+If my background doesn't support a requirement, do not invent experience. Tell me what's missing after the letter instead.`);
+  p.push(`# Output format
+- The letter only: ${v.len}${v.name?`, signed "${v.name}"`:""}
+- Tone: ${v.tone}
+- Then, under a line, list the 3 requirements you targeted and the evidence you used for each`);
+  const avoid=['Clichés such as "passionate", "team player", "fast-paced environment" and "I believe I would be a great fit"',"Repeating my resume line by line",...v.extra.split("\n").map(s=>s.trim()).filter(Boolean)];
+  p.push("# Also\n"+avoid.map(a=>"- "+a).join("\n"));
+  const txt=p.join("\n\n");$("out").textContent=txt;$("wc").textContent=words(txt)+" words";
+  const c=[];
+  if(!v.title||!v.company)c.push("Add the job title and company.");
+  if(!v.jd)c.push("Paste the job description. The letter is only as specific as what it can match against.");
+  else if(words(v.jd)<60)c.push("That job description looks short. Paste the full posting, including requirements.");
+  if(!v.bg)c.push("Add your relevant experience: roles, what you did, and results.");
+  else if(!/\d/.test(v.bg))c.push("Add at least one number (a %, $, count or timeframe). Concrete results make letters stand out.");
+  if(!v.why)c.push("Add one specific reason you want this role. It powers the opening line.");
+  renderChecks($("check"),c);
+}
+F.forEach(i=>$(i).addEventListener("input",build));
+wireCopy($("copy"),$("out"));
+$("clear").addEventListener("click",()=>{F.forEach(i=>{const e=$(i);e.value=e.tagName=="SELECT"?([...e.options].find(o=>o.defaultSelected)||e.options[0]).value:""});build();$("title").focus()});
+build();
+</script></body></html>

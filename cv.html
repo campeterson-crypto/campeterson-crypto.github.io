@@ -1,2 +1,34 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CV | Cameron Peterson</title><link rel="stylesheet" href="style.css?v=3"></head>
-<body><main id="m"></main><script src="site.js?v=2"></script><script>shell("CV");m.innerHTML=band(`<p class="eyebrow">CV</p><h1>Experience &amp; education</h1><div class="lede" style="margin-bottom:36px">${SITE.bio.map(b=>`<p>${b}</p>`).join("")}</div><ul class="items">${SITE.cv.map(c=>`<li><span class="when">${c.when}</span><br><span class="t">${c.role}</span>, ${c.org}${c.note?`<div class="d">${c.note}</div>`:""}</li>`).join("")}</ul>`)</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CV | Cameron Peterson</title>
+<meta name="description" content="Cameron Peterson's CV: experience, education and skills.">
+<link rel="canonical" href="https://campeterson-crypto.github.io/cv.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cameron Peterson">
+<meta property="og:title" content="CV | Cameron Peterson">
+<meta property="og:description" content="Cameron Peterson's CV: experience, education and skills.">
+<meta property="og:url" content="https://campeterson-crypto.github.io/cv.html">
+<meta property="og:image" content="https://campeterson-crypto.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cameron Peterson, personal site">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body><main id="m"></main><script src="site.js?v=4"></script><script>
+shell("CV");
+const S=SITE,has=S.about.length||S.experience.length||S.education.length||S.skills.length;
+const sec=(title,body)=>`<div class="cv-sec"><p class="label">${title}</p>${body}</div>`;
+m.innerHTML=band(`<p class="eyebrow">CV</p><h1>${S.name}</h1>
+${S.about.length?`<div class="prose lede" style="color:var(--fg);margin-bottom:48px">${S.about.map(p=>`<p>${p}</p>`).join("")}</div>`:""}
+${S.experience.length?sec("Experience",`<ul class="items">${S.experience.map(x=>`<li><span class="when">${x.when}</span><h3>${x.role}</h3><div class="d">${x.org}${x.where?" · "+x.where:""}</div>${x.points&&x.points.length?`<ul>${x.points.map(p=>`<li>${p}</li>`).join("")}</ul>`:""}</li>`).join("")}</ul>`):""}
+${S.education.length?sec("Education",`<ul class="items">${S.education.map(x=>`<li><span class="when">${x.when}</span><h3>${x.degree}</h3><div class="d">${x.school}${x.note?" · "+x.note:""}</div></li>`).join("")}</ul>`):""}
+${S.skills.length?sec("Skills",`<ul class="tags">${S.skills.map(s=>`<li>${s}</li>`).join("")}</ul>`):""}
+${has?"":`<p class="lede" style="margin-bottom:24px">My full experience and education are on LinkedIn while this page is being filled in.</p>`}
+<div class="btns" style="margin-top:${has?56:0}px"><a class="btn" href="${S.linkedin}">View LinkedIn profile ↗</a></div>`);
+</script></body></html>

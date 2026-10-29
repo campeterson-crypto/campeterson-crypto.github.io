@@ -1,5 +1,32 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cameron Peterson</title><link rel="stylesheet" href="style.css?v=3"></head>
-<body><main id="m"></main><script src="site.js?v=2"></script><script>shell("Home");m.innerHTML=band(`<img class="portrait" src="${SITE.photo}" alt="${SITE.name}"><p class="intro">${SITE.intro}</p>`)
-+band(`<a class="eyebrow" href="essays.html">Essays</a><h2>Writing and ideas</h2><a class="btn" href="essays.html">Read my essays →</a>`)
-+band(`<a class="eyebrow" href="projects.html">Projects</a><h2>See what I&#39;m building</h2><a class="btn" href="projects.html">View projects →</a>`)
-+band(`<a class="eyebrow" href="cv.html">CV</a><h2>Experience and education</h2><a class="btn" href="cv.html">View my CV →</a>`)</script></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cameron Peterson</title>
+<meta name="description" content="Cameron Peterson's personal site: projects, AI prompting tools, and CV.">
+<link rel="canonical" href="https://campeterson-crypto.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cameron Peterson">
+<meta property="og:title" content="Cameron Peterson">
+<meta property="og:description" content="Cameron Peterson's personal site: projects, AI prompting tools, and CV.">
+<meta property="og:url" content="https://campeterson-crypto.github.io/">
+<meta property="og:image" content="https://campeterson-crypto.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cameron Peterson, personal site">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=4">
+</head>
+<body><main id="m"></main><script src="site.js?v=4"></script><script>
+shell("Home");
+const card=t=>`<a class="card" href="${t.url}"><span class="k">Tool</span><span class="t">${t.title}</span><span class="d">${t.desc}</span><span class="go">Open →</span></a>`;
+m.innerHTML=
+ band(`<img class="portrait" src="${SITE.photo}" alt="${SITE.name}" width="120" height="120"><p class="intro">${SITE.intro}</p>`)
++band(`<a class="eyebrow" href="projects.html">AI Prompting Toolkit</a><h2>Tools for writing better prompts</h2><div class="cards">${SITE.tools.map(card).join("")}</div>`)
++(SITE.projects.length?band(`<a class="eyebrow" href="projects.html">Projects</a><h2>See what I'm building</h2><a class="btn" href="projects.html">View projects →</a>`):"")
++(SITE.essays.length?band(`<a class="eyebrow" href="essays.html">Essays</a><h2>Writing and ideas</h2><a class="btn" href="essays.html">Read my essays →</a>`):"")
++band(`<a class="eyebrow" href="cv.html">CV</a><h2>Experience and education</h2><div class="btns"><a class="btn" href="cv.html">View my CV →</a><a class="btn ghost" href="${SITE.linkedin}">LinkedIn ↗</a></div>`);
+</script></body></html>
