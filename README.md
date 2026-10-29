@@ -38,9 +38,7 @@ experience:[
 
 Page titles, descriptions and link previews are in the `<head>` at the top of each `.html` file.
 
-**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=9` at the end of their links in every `.html` file (to `?v=10` and so on).
-
-**Home page decorations:** the moving fintech, ski and CU designs in the side margins are in `decor.js` (styles under "scroll decorations" in `style.css`). They only appear on screens 1300px or wider.
+**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=8` at the end of their links in every `.html` file (to `?v=9` and so on).
 
 **Sandwich Shop of the Week:** shops live in `sandwiches.js`, one per week starting Oct 26, 2026, switching every Monday at midnight Pacific. The list of 21 runs out on Mar 22, 2027, after which it starts over. Add new shops to the END of the list (each needs name, city, neighborhood, address, lat/lon, background, favorite items and an optional tip) so past weeks stay the same.
 
