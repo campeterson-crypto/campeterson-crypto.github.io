@@ -11,6 +11,9 @@ Live at **https://campeterson-crypto.github.io**, hosted free on GitHub Pages. E
 | `toolkit.html` | Prompt Builder (12 task types) |
 | `cover-letter.html` | Cover Letter Builder |
 | `budget.html` | Budget Planner: income, expenses, savings goals, emergency fund, debt payoff (saved in the visitor's browser only) |
+| `ski.html` | Ski Pass Calculator: Ikon vs. Epic vs. day tickets by resort, with friend tickets |
+| `private-credit.html` | Interactive explainer of how a private credit fund, its waterfall and carry work |
+| `sports.html` | Live ESPN headlines, records and next games for the Chargers, Nuggets, Avalanche and Buffs |
 | `cv.html` | CV: about, experience, education, skills |
 | `essays.html` | Essays (hidden from the menu until there's at least one) |
 | `404.html` | Shown for any address that doesn't exist |
@@ -34,7 +37,11 @@ experience:[
 
 Page titles, descriptions and link previews are in the `<head>` at the top of each `.html` file.
 
-**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=6` at the end of their links in every `.html` file (to `?v=7` and so on).
+**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=7` at the end of their links in every `.html` file (to `?v=8` and so on).
+
+**Ski Pass Calculator:** pass prices (`PRICES`), friend tickets (`FRIEND`) and each resort's day-ticket estimate and pass access (`REGIONS`) are at the top of the script in `ski.html`. Update them each season; prices there are as of Oct 10, 2026.
+
+**Sports:** teams are the `TEAMS` list in `sports.html` (ESPN sport path + team id). News comes from ESPN's public site API, which is unofficial and could change.
 
 **Budget Planner:** the expense categories and their default line items are the `CATS` list near the top of the script in `budget.html`; the example budget's amounts are in `EX` and `example()` just below it. Visitors' budgets live only in their own browser (`localStorage`), and they can save or open them as a `.json` file.
 

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>How a Private Credit Fund Works | Cameron Peterson</title>
+<meta name="description" content="An interactive explainer: how LP capital becomes loans to PE-backed middle-market companies, and how cash returns through the waterfall and carried interest.">
+<link rel="canonical" href="https://campeterson-crypto.github.io/private-credit.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cameron Peterson">
+<meta property="og:title" content="How a Private Credit Fund Works | Cameron Peterson">
+<meta property="og:description" content="An interactive explainer: how LP capital becomes loans to PE-backed middle-market companies, and how cash returns through the waterfall and carried interest.">
+<meta property="og:url" content="https://campeterson-crypto.github.io/private-credit.html">
+<meta property="og:image" content="https://campeterson-crypto.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cameron Peterson, personal site">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=7">
+</head>
+<body><main id="m">
+<section class="band"><div class="wrap">
+  <a class="crumb" href="projects.html">← Projects</a><br>
+  <a class="eyebrow" href="projects.html">Explainer</a>
+  <h1>How a private credit fund works</h1>
+  <p class="lede">Private credit funds take money from big institutional investors and lend it directly to mid-sized companies, most of them owned by private equity firms. Interest comes in, loans get repaid, and the cash flows back through a "waterfall" that decides when investors get their money back and when the manager earns its share of the profit. Step through it below, then change the numbers and watch the outcome move.</p>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="label">Part 1 — Follow the money</p>
+  <div class="pc-steps" role="tablist" aria-label="Fund life cycle steps" id="stepTabs"></div>
+  <div class="diagram"><svg id="flow" viewBox="0 0 760 330" role="img" aria-labelledby="flowTitle"><title id="flowTitle">Diagram of money moving between investors, the fund, its manager, its lenders and the companies it lends to</title></svg></div>
+  <div class="pc-explain" aria-live="polite"><h2 id="stepTitle"></h2><div id="stepBody" class="prose"></div>
+    <div class="btns"><button class="btn ghost" type="button" id="prev">← Back</button><button class="btn solid" type="button" id="next">Next step →</button></div></div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="label">Part 2 — Run the numbers</p>
+  <h2>A simple fund, start to finish</h2>
+  <p class="lede" style="margin-bottom:32px">A simplified model: all capital is called on day one, loans pay interest every year, a slice defaults each year, and everything that's left is repaid at the end. Drag the sliders.</p>
+  <div class="tk pc-model">
+    <div id="sliders"></div>
+    <aside class="out" aria-label="Fund results">
+      <div class="stats pc-kpis">
+        <div class="stat"><b id="kIrr">–</b><span>Investor (LP) net return / yr</span></div>
+        <div class="stat"><b id="kMoic">–</b><span>LP money back, per $1</span></div>
+        <div class="stat"><b id="kGp">–</b><span>Manager earns (fees + carry)</span></div>
+      </div>
+      <p class="label">Where every dollar paid out goes</p>
+      <div class="wbar" id="wbar" aria-hidden="true"></div>
+      <ol class="tiers" id="tiers"></ol>
+      <p class="label" style="margin-top:28px">Cash to investors and manager, by year</p>
+      <div class="years" id="years"></div>
+      <p class="note" id="yearsNote"></p>
+    </aside>
+  </div>
+</div></section>
+
+<section class="band"><div class="wrap">
+  <p class="label">Part 3 — Terms worth knowing</p>
+  <dl class="gloss">
+    <div><dt>LP (limited partner)</dt><dd>An investor in the fund: pensions, insurers, endowments, sovereign wealth funds, wealthy families. They commit money up front and the manager draws it down as it finds loans to make.</dd></div>
+    <div><dt>GP (general partner)</dt><dd>The fund manager. It sources, underwrites and monitors the loans, and is paid a management fee plus carried interest.</dd></div>
+    <div><dt>PE sponsor</dt><dd>The private equity firm that owns the borrower. It usually puts in 40–60% of the purchase price as equity, which sits beneath the loan and absorbs losses first.</dd></div>
+    <div><dt>Middle market</dt><dd>Companies too big for a local bank but too small for public bond markets, often with roughly $10–100M of annual EBITDA.</dd></div>
+    <div><dt>Senior secured / unitranche</dt><dd>The loan is first in line to be repaid and is backed by the company's assets. A unitranche rolls what used to be several layers of debt into one loan from one lender.</dd></div>
+    <div><dt>SOFR + spread</dt><dd>Loans are floating-rate: the interest rate is a benchmark (SOFR) plus a fixed spread, so income rises when rates rise.</dd></div>
+    <div><dt>OID / upfront fee</dt><dd>The lender funds slightly less than face value (say 98 cents per dollar) but is repaid in full, an extra 1–3% of return.</dd></div>
+    <div><dt>Fund leverage</dt><dd>Many direct lending funds borrow from banks against their loan portfolio, often around 1x, to amplify returns on investors' equity.</dd></div>
+    <div><dt>Preferred return (hurdle)</dt><dd>The annual return LPs must earn, typically 5–8% in private credit, before the manager earns any carry.</dd></div>
+    <div><dt>Catch-up</dt><dd>Once LPs have their capital and pref, the GP gets most or all of the next dollars until it has "caught up" to its carry share of total profit.</dd></div>
+    <div><dt>Carried interest (carry)</dt><dd>The GP's share of profits, often 10–15% in private credit (lower than the ~20% typical in private equity), paid only after LPs get their money back plus the pref.</dd></div>
+    <div><dt>MOIC and IRR</dt><dd>MOIC is total money returned divided by money invested. IRR is the annualized return that accounts for when the cash came back.</dd></div>
+  </dl>
+  <p class="note" style="margin-top:32px">An educational, simplified illustration. It doesn't describe any specific fund, and real funds differ in fee bases, reinvestment, timing of capital calls, waterfall terms and taxes.</p>
+</div></section>
+</main>
+<script src="site.js?v=7"></script><script>
+shell("Projects");
+const $=i=>document.getElementById(i);
+const M=n=>"$"+(Math.abs(n)>=1000?(n/1000).toFixed(2)+"B":(Math.round(n*10)/10).toLocaleString("en-US",{maximumFractionDigits:1})+"M");
+const P=n=>(Math.round(n*1000)/10).toFixed(1)+"%";
+
+// ---------- model ----------
+const SL=[
+ ["size","Fund size (LP commitments)",100,2000,50,500,v=>"$"+v+"M"],
+ ["years","Fund life",3,8,1,5,v=>v+" years"],
+ ["sofr","Base rate (SOFR)",1,6,0.25,4,v=>v+"%"],
+ ["spread","Loan spread over SOFR",3,8,0.25,5.5,v=>v+"%"],
+ ["oid","Upfront fee (OID)",0,4,0.25,2,v=>v+"%"],
+ ["def","Loans defaulting per year",0,8,0.25,2,v=>v+"%"],
+ ["rec","Recovered on defaults",20,90,5,60,v=>v+"%"],
+ ["lev","Fund leverage",0,1.5,0.25,1,v=>v+"x"],
+ ["fee","Management fee",0.5,2,0.25,1.25,v=>v+"% / yr"],
+ ["hurdle","Preferred return (hurdle)",0,10,0.5,6,v=>v+"%"],
+ ["carry","Carried interest",0,25,2.5,15,v=>v+"%"]];
+const V={};SL.forEach(s=>V[s[0]]=s[5]);
+$("sliders").innerHTML=SL.map(([k,l,mn,mx,st,dv,f])=>`<label class="sl"><span class="slt">${l}<output id="o-${k}">${f(dv)}</output></span><input type="range" id="s-${k}" min="${mn}" max="${mx}" step="${st}" value="${dv}"></label>`).join("")+`<button class="linkbtn" type="button" id="resetModel" style="margin-top:10px">Reset to defaults</button>`;
+
+function irr(flows){let lo=-0.99,hi=1;const npv=r=>flows.reduce((s,c,t)=>s+c/Math.pow(1+r,t),0);if(npv(lo)*npv(hi)>0)return NaN;for(let i=0;i<100;i++){const mid=(lo+hi)/2;npv(mid)>0?lo=mid:hi=mid}return (lo+hi)/2}
+function model(){
+  const C=V.size,T=V.years,levDebt=C*V.lev,A0=C+levDebt,rate=(V.sofr+V.spread)/100,levRate=(V.sofr+2.25)/100;
+  let A=A0,carryIn=0;const rows=[];
+  for(let t=1;t<=T;t++){
+    const interest=A*rate,oid=t==1?A0*V.oid/100:0,defaulted=A*V.def/100,recov=defaulted*V.rec/100,loss=defaulted-recov;
+    A-=defaulted;const levInt=levDebt*levRate,fee=C*V.fee/100;
+    let net=interest+oid+recov-levInt-fee+carryIn;carryIn=0;
+    const principal=t==T?A-levDebt:0;net+=principal;
+    if(net<0&&t<T){carryIn=net;net=0}
+    rows.push({t,interest:interest+oid,loss,levInt,fee,principal,net:Math.max(net,0)});
+  }
+  // European-style waterfall, applied year by year as cash comes in
+  const h=V.hurdle/100,c=V.carry/100;let capOut=C,prefOwed=0,roc=0,pref=0,cu=0,lpS=0,gpS=0;
+  rows.forEach(r=>{prefOwed+=(capOut+prefOwed)*h;let x=r.net;
+    const a=Math.min(x,capOut);capOut-=a;roc+=a;x-=a;
+    const b=Math.min(x,prefOwed);prefOwed-=b;pref+=b;x-=b;
+    let g=0,l=a+b;
+    if(x>0&&c>0){const target=c/(1-c)*pref;const d=Math.min(x,Math.max(0,target-cu));cu+=d;g+=d;x-=d}
+    if(x>0){lpS+=x*(1-c);gpS+=x*c;l+=x*(1-c);g+=x*c}
+    r.lp=l;r.gp=g});
+  const fees=sum(rows.map(r=>r.fee)),lpTot=roc+pref+lpS,carryTot=cu+gpS;
+  return{C,T,A0,levDebt,rate,levRate,rows,roc,pref,cu,lpS,gpS,fees,carryTot,lpTot,irr:irr([-C,...rows.map(r=>r.lp)]),moic:lpTot/C,losses:sum(rows.map(r=>r.loss)),interest:sum(rows.map(r=>r.interest))};
+}
+const sum=a=>a.reduce((s,n)=>s+n,0);
+
+// ---------- diagram ----------
+const NODES={
+  lp:{x:8,y:135,w:152,h:70,t:"Investors (LPs)",s:"pensions · insurers"},
+  fund:{x:304,y:135,w:152,h:70,t:"The fund",s:"managed by the GP"},
+  co:{x:600,y:135,w:152,h:70,t:"Companies",s:"PE-backed borrowers"},
+  gp:{x:304,y:10,w:152,h:56,t:"Manager (GP)",s:"earns fees + carry"},
+  bank:{x:304,y:264,w:152,h:56,t:"Banks",s:"credit facility"}};
+const ARROWS=[
+  ["call","lp","fund",-14,"capital"],["dist","fund","lp",-14,"distributions"],
+  ["loan","fund","co",-14,"loans"],["repay","co","fund",-14,"interest + principal"],
+  ["gp","fund","gp",0,"fees + carry"],
+  ["borrow","bank","fund",-16,"borrowing"],["service","fund","bank",-16,"interest + repayment"]];
+const ctr=n=>({x:n.x+n.w/2,y:n.y+n.h/2});
+function edge(n,dx,dy){const c=ctr(n),t=Math.min(dx?n.w/2/Math.abs(dx):1e9,dy?n.h/2/Math.abs(dy):1e9);return{x:c.x+dx*t,y:c.y+dy*t}}
+function drawFlow(){
+  let s=`<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahd"/></marker><marker id="ahOn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="ahOn"/></marker></defs>`;
+  ARROWS.forEach(([id,a,b,off,label])=>{const A=NODES[a],B=NODES[b],ca=ctr(A),cb=ctr(B);let dx=cb.x-ca.x,dy=cb.y-ca.y;const L=Math.hypot(dx,dy);dx/=L;dy/=L;
+    const px=-dy,py=dx,p1=edge(A,dx,dy),p2=edge(B,-dx,-dy),gap=6;
+    const x1=p1.x+px*off+dx*gap,y1=p1.y+py*off+dy*gap,x2=p2.x+px*off-dx*gap,y2=p2.y+py*off-dy*gap;
+    const lo=off<0?off-12:off+12,lx=(x1+x2)/2+px*(off?lo:0)+(off?0:14),ly=(y1+y2)/2+py*(off?lo:0);
+    const anchor=Math.abs(dx)>0.5?"middle":(lx>(x1+x2)/2?"start":"end");
+    s+=`<g class="arrow" data-a="${id}"><line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" marker-end="url(#ah)"/><text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="${anchor}" dominant-baseline="middle">${label}</text></g>`});
+  Object.entries(NODES).forEach(([id,n])=>{s+=`<g class="node" data-n="${id}"><rect x="${n.x}" y="${n.y}" width="${n.w}" height="${n.h}" rx="6"/><text class="nt" x="${n.x+n.w/2}" y="${n.y+n.h/2-6}" text-anchor="middle">${n.t}</text><text class="ns" x="${n.x+n.w/2}" y="${n.y+n.h/2+14}" text-anchor="middle">${n.s}</text></g>`});
+  $("flow").insertAdjacentHTML("beforeend",s);
+}
+const STEPS=[
+  {t:"Raise the fund",n:["lp","fund","gp"],a:[],b:R=>`<p>Investors (LPs) promise, or <b>commit</b>, money to a new fund: ${M(R.C)} in this example. Nothing moves yet; they'll send cash when the manager asks for it.</p><p>The manager (GP) usually puts in a small slice of its own money too, often 1–2%, so it shares in the outcome.</p>`},
+  {t:"Call capital and add leverage",n:["lp","fund","bank"],a:["call","borrow"],b:R=>`<p>As the GP finds good loans, it <b>calls capital</b> from LPs. Many direct lending funds also borrow from banks against their loans.</p><p>Here, ${M(R.C)} of LP equity plus ${V.lev}x leverage (${M(R.levDebt)}) means the fund can lend about <b>${M(R.A0)}</b>.</p>`},
+  {t:"Lend to PE-backed companies",n:["fund","co"],a:["loan"],b:R=>`<p>The fund makes <b>senior secured, floating-rate loans</b> to middle-market companies, usually to help a private equity sponsor buy the company or make an acquisition.</p><p>The sponsor typically puts in 40–60% of the purchase price as equity, which sits below the loan and absorbs losses first. A fund spreads its money across dozens of borrowers.</p>`},
+  {t:"Collect interest",n:["co","fund","gp","bank"],a:["repay","gp","service"],b:R=>`<p>Borrowers pay <b>SOFR + spread</b>: ${V.sofr}% + ${V.spread}% = ${(V.sofr+V.spread).toFixed(2)}% a year here, plus a ${V.oid}% upfront fee. Over the fund's life that's about <b>${M(R.interest)}</b> of interest and fees.</p><p>Out of that, the fund pays interest on its bank borrowing (${M(sum(R.rows.map(r=>r.levInt)))}) and the GP's management fee (${M(R.fees)}). Some borrowers default; after recoveries, losses total ${M(R.losses)}.</p>`},
+  {t:"Get repaid",n:["co","fund","bank"],a:["repay","service"],b:R=>`<p>Loans are repaid at maturity, or earlier when the company is sold or refinanced, often after three or four years. The fund repays its bank borrowing first.</p><p>In this example ${M(R.rows[R.rows.length-1].principal)} of principal comes back to the fund in year ${R.T}, after the bank is repaid.</p>`},
+  {t:"Distribute through the waterfall",n:["fund","lp","gp"],a:["dist","gp"],b:R=>`<p>Cash goes out in a strict order called the <b>waterfall</b>:</p><ol><li><b>Return of capital:</b> LPs get back the ${M(R.C)} they put in.</li><li><b>Preferred return:</b> LPs get a ${V.hurdle}% annual return on that money (${M(R.pref)} here).</li><li><b>Catch-up:</b> the GP takes the next dollars until it has ${V.carry}% of profits so far (${M(R.cu)}).</li><li><b>Split:</b> everything after that is shared ${100-V.carry}/${V.carry} between LPs and GP.</li></ol><p>So the GP earns <b>carry only after LPs have their principal back plus the pref</b>. Here carry totals ${M(R.carryTot)}.</p>`}];
+let step=0;
+$("stepTabs").innerHTML=STEPS.map((s,i)=>`<button type="button" role="tab" id="tab${i}" data-i="${i}"><span>${i+1}</span>${s.t}</button>`).join("");
+function showStep(i){step=Math.max(0,Math.min(STEPS.length-1,i));const S=STEPS[step],R=model();
+  document.querySelectorAll("#stepTabs button").forEach((b,j)=>{b.setAttribute("aria-selected",j==step);b.tabIndex=j==step?0:-1});
+  document.querySelectorAll("#flow .node").forEach(g=>g.classList.toggle("on",S.n.includes(g.dataset.n)));
+  document.querySelectorAll("#flow .arrow").forEach(g=>{const on=S.a.includes(g.dataset.a);g.classList.toggle("on",on);g.querySelector("line").setAttribute("marker-end",on?"url(#ahOn)":"url(#ah)")});
+  $("stepTitle").textContent=`${step+1}. ${S.t}`;$("stepBody").innerHTML=S.b(R);
+  $("prev").disabled=step==0;$("next").textContent=step==STEPS.length-1?"Start over ↺":"Next step →";}
+$("stepTabs").addEventListener("click",e=>{const b=e.target.closest("button");if(b)showStep(+b.dataset.i)});
+$("stepTabs").addEventListener("keydown",e=>{if(e.key=="ArrowRight"||e.key=="ArrowLeft"){showStep(step+(e.key=="ArrowRight"?1:-1));$("tab"+step).focus();e.preventDefault()}});
+$("prev").addEventListener("click",()=>showStep(step-1));
+$("next").addEventListener("click",()=>showStep(step==STEPS.length-1?0:step+1));
+
+// ---------- results ----------
+function render(){
+  SL.forEach(([k,,,,,,f])=>$("o-"+k).textContent=f(V[k]));
+  const R=model(),tot=R.roc+R.pref+R.cu+R.lpS+R.gpS;
+  $("kIrr").textContent=isFinite(R.irr)?P(R.irr):"–";
+  $("kMoic").textContent="$"+R.moic.toFixed(2);
+  $("kGp").textContent=M(R.fees+R.carryTot);
+  const T=[["roc","Return of capital","LPs get back what they put in",R.roc,"lp"],["pref","Preferred return",`LPs' ${V.hurdle}% hurdle`,R.pref,"lp"],["cu","GP catch-up",`GP catches up to ${V.carry}% of profit`,R.cu,"gp"],["lps","Split: LP share",`${100-V.carry}% of what's left`,R.lpS,"lp"],["gps","Split: GP carry",`${V.carry}% of what's left`,R.gpS,"gp"]];
+  $("wbar").innerHTML=T.filter(x=>x[3]>0.05).map(x=>`<span class="w-${x[0]}" style="flex:${x[3]}" title="${x[1]}: ${M(x[3])}"></span>`).join("");
+  $("tiers").innerHTML=T.map(x=>`<li class="${x[3]>0.05?"":"zero"}"><i class="sw w-${x[0]}"></i><span><b>${x[1]}</b><br><span class="mut">${x[2]}</span></span><span class="money">${M(x[3])}<br><span class="mut">${tot?Math.round(x[3]/tot*100):0}%</span></span></li>`).join("")+`<li class="tot"><i class="sw"></i><span>Management fees (paid along the way)</span><span class="money">${M(R.fees)}</span></li>`;
+  const mx=Math.max(...R.rows.map(r=>r.lp+r.gp),R.C);
+  $("years").innerHTML=`<div class="yc"><div class="ybar"><span class="neg" style="height:${R.C/mx*100}%"></span></div><span class="yl">Day 1</span><span class="yv">−${M(R.C)}</span></div>`+R.rows.map(r=>`<div class="yc"><div class="ybar"><span class="gpb" style="height:${r.gp/mx*100}%"></span><span class="lpb" style="height:${r.lp/mx*100}%"></span></div><span class="yl">Yr ${r.t}</span><span class="yv">${M(r.lp+r.gp)}</span></div>`).join("");
+  $("yearsNote").innerHTML=`<i class="sw lpb"></i>To LPs <i class="sw gpb"></i>To GP (carry) <i class="sw neg"></i>LP capital called. Interest flows out every year, but carry only starts once LPs have their ${M(R.C)} back plus the pref, which here happens in year ${(R.rows.find(r=>r.gp>0.01)||{t:"–"}).t}.`;
+  showStep(step);
+}
+SL.forEach(([k])=>$("s-"+k).addEventListener("input",e=>{V[k]=+e.target.value;render()}));
+$("resetModel").addEventListener("click",()=>{SL.forEach(s=>{V[s[0]]=s[5];$("s-"+s[0]).value=s[5]});render()});
+drawFlow();render();
+</script></body></html>

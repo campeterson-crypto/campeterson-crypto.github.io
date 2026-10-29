@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap");
 /* Always white, like Ian's. Forest green for headings/chips, ocean blue for links/nav/actions. */
-:root{--bg:#ffffff;--fg:#1e2b26;--mut:#5c6a64;--blue:#1b6a96;--green:#2e5e3e;--teal:#2f7f8a;--deep:#234a30;--tint:#f4f8f6;--edge:#d3e2da;--line:#e9efec;--bad:#b3261e;--needbg:#e3efe7;--wantbg:#e1eef6;--debtbg:#e0f0f1;
+:root{--bg:#ffffff;--fg:#1e2b26;--mut:#5c6a64;--blue:#1b6a96;--green:#2e5e3e;--teal:#2f7f8a;--deep:#234a30;--tint:#f4f8f6;--edge:#d3e2da;--line:#e9efec;--bad:#b3261e;--needbg:#e3efe7;--wantbg:#e1eef6;--debtbg:#e0f0f1;--gold:#a8741a;--goldlt:#d9ad5b;
   --serif:Lora,Georgia,serif;--mono:"Space Mono",Consolas,"Courier New",monospace;color-scheme:light}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -214,3 +214,112 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-of
   .big .v{font-size:34px}
   .stat b{font-size:16px}
 }
+
+/* ---------- sports ---------- */
+.mono-s{font:12px var(--mono);color:var(--mut)}
+.refresh{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:24px}
+.teams{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,400px),1fr));gap:20px}
+.team{border:1px solid var(--edge);border-radius:4px;padding:20px;display:flex;flex-direction:column;min-width:0}
+.thead{display:flex;gap:14px;align-items:center;margin-bottom:12px}
+.tlogo{width:44px;height:44px;flex:none;object-fit:contain;border-radius:4px;background:var(--tint)}
+img.tlogo{background:none}
+.tname{font-size:22px;margin:0;line-height:1.25}
+.tmeta{margin:2px 0 0;font:12px var(--mono);color:var(--mut)}
+.game{margin:0 0 6px;font-size:14.5px;padding:9px 12px;background:var(--tint);border-radius:3px}
+.game .gk{display:inline-block;width:38px;font:11px var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--teal)}
+.game.live .gk{color:var(--bad)}
+.news{list-style:none;padding:0;margin:0}
+.news li{padding:12px 0;border-bottom:1px solid var(--line)}
+.news li:last-child{border-bottom:0}
+.news a{color:var(--deep);text-decoration-color:var(--edge);font-size:16px;line-height:1.4}
+.news a:hover{text-decoration-color:var(--blue);color:var(--blue)}
+.news .desc{margin:6px 0 0;font-size:14.5px;color:var(--mut)}
+.news .when{display:block;margin-top:4px}
+.news .skel{height:44px;background:linear-gradient(90deg,var(--tint),var(--line),var(--tint));background-size:200% 100%;animation:sk 1.2s infinite linear;border-radius:3px;margin:10px 0;border:0}
+@keyframes sk{to{background-position:-200% 0}}
+.more{margin-top:auto;padding-top:12px;font:12px var(--mono);color:var(--blue)}
+
+/* ---------- ski pass calculator ---------- */
+.rr{display:grid;grid-template-columns:minmax(0,2fr) repeat(var(--cols,3),minmax(0,.8fr));gap:10px;align-items:end;padding:12px 0;border-bottom:1px solid var(--line)}
+.rr:last-child{border-bottom:0}
+.rr .rn{align-self:center;min-width:0;display:flex;flex-direction:column;gap:6px}
+.rr .rn b{font-weight:500}
+.rr .rn input,.rr .rn select{padding:8px 9px;font-size:15px}
+.rr .rn .x{align-self:flex-start}
+.rr.on .rn b{color:var(--green)}
+.rr .mini input{padding:8px 9px}
+.acc{font-size:12.5px;color:var(--mut);line-height:1.5}
+.pk{font:10px var(--mono);text-transform:uppercase;letter-spacing:.04em;padding:1px 5px;border-radius:3px}
+.pk.ik{background:var(--needbg);color:var(--green)}.pk.ep{background:var(--wantbg);color:var(--blue)}
+.opts{margin-bottom:28px}
+.opt{padding:12px 0;border-bottom:1px solid var(--line)}
+.opt .top{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.opt .top b{font-weight:500;font-size:17px}
+.opt.best .top b{color:var(--green)}
+.opt .od{margin:6px 0 0;font-size:13px;color:var(--mut)}
+.atable{display:grid;gap:8px;margin-top:12px}
+.ar{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:8px;align-items:center;font-size:14.5px}
+.ar input{padding:7px 8px;font-size:14.5px}
+.ah{font:11px var(--mono);color:var(--mut)}
+
+/* ---------- private credit explainer ---------- */
+.pc-steps{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.pc-steps button{font:12px var(--mono);color:var(--green);background:var(--bg);border:1px solid var(--edge);border-radius:3px;padding:8px 11px;cursor:pointer;display:flex;gap:8px;align-items:center}
+.pc-steps button span{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--needbg);font-size:11px}
+.pc-steps button[aria-selected="true"]{background:var(--green);border-color:var(--green);color:#fff}
+.pc-steps button[aria-selected="true"] span{background:#fff;color:var(--green)}
+.diagram{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--bg);padding:8px}
+.diagram svg{display:block;width:100%;min-width:640px;height:auto}
+.node rect{fill:var(--tint);stroke:var(--edge);stroke-width:1.5;transition:stroke .2s,fill .2s}
+.node .nt{font:500 15px var(--serif);fill:var(--fg)}
+.node .ns{font:10.5px var(--mono);fill:var(--mut)}
+.node{opacity:.45;transition:opacity .2s}
+.node.on{opacity:1}
+.node.on rect{stroke:var(--green);stroke-width:2;fill:#fff}
+.arrow line{stroke:var(--edge);stroke-width:2}
+.arrow text{font:12px var(--serif);fill:var(--mut);opacity:.6}
+.arrow.on line{stroke:var(--blue);stroke-width:2.5;stroke-dasharray:7 5;animation:flow 1s linear infinite}
+.arrow.on text{fill:var(--blue);opacity:1;font-weight:500}
+.ahd{fill:var(--edge)}.ahOn{fill:var(--blue)}
+@keyframes flow{to{stroke-dashoffset:-24}}
+.pc-explain{margin-top:24px;max-width:680px}
+.pc-explain h2{font-size:27px;margin-bottom:10px}
+.pc-explain ol{padding-left:1.3em}.pc-explain li{margin:4px 0}
+.pc-explain .btns{margin-top:18px}
+.sl{display:block;margin-bottom:16px}
+.slt{display:flex;justify-content:space-between;gap:10px;font-size:15px;margin-bottom:4px}
+.slt output{font:13px var(--mono);color:var(--blue);font-variant-numeric:tabular-nums}
+.sl input[type=range]{width:100%;padding:0;background:none;border:0;accent-color:var(--blue);height:24px}
+.pc-kpis{margin-top:0}
+.pc-kpis .stat b{font-size:22px}
+.wbar{display:flex;height:22px;border-radius:3px;overflow:hidden;margin-bottom:14px;gap:2px}
+.w-roc{background:var(--deep)}.w-pref{background:var(--green)}.w-cu{background:var(--goldlt)}.w-lps{background:var(--blue)}.w-gps{background:var(--gold)}
+.tiers{list-style:none;padding:0;margin:0}
+.tiers li{display:grid;grid-template-columns:14px minmax(0,1fr) auto;gap:10px;align-items:start;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.5px}
+.tiers li.zero{opacity:.45}
+.tiers li.tot{border-bottom:0;color:var(--mut)}
+.tiers b{font-weight:500}
+.tiers .money{text-align:right}
+.tiers .mut{font-size:12.5px}
+.sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-top:5px;background:var(--line)}
+#yearsNote .sw{margin:0 5px 0 10px;vertical-align:-1px}
+#yearsNote .sw:first-child{margin-left:0}
+.years{display:flex;gap:8px;align-items:flex-end;height:180px;padding-bottom:40px;position:relative}
+.yc{flex:1;min-width:0;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.ybar{width:100%;max-width:44px;height:100%;display:flex;flex-direction:column;justify-content:flex-end}
+.ybar span{display:block;width:100%}
+.ybar span:first-child{border-radius:3px 3px 0 0}
+.lpb{background:var(--blue)}.gpb{background:var(--gold)}.neg{background:repeating-linear-gradient(45deg,var(--edge),var(--edge) 3px,var(--tint) 3px,var(--tint) 6px)}
+.yl{font:11px var(--mono);color:var(--mut);margin-top:6px}
+.yv{font:10.5px var(--mono);color:var(--fg);white-space:nowrap}
+.gloss{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:22px 32px;margin:0}
+.gloss dt{font:500 17px var(--serif);color:var(--deep);margin-bottom:4px}
+.gloss dd{margin:0;color:var(--mut);font-size:15px}
+@media(max-width:600px){
+  .rr{grid-template-columns:repeat(var(--cols,3),minmax(0,1fr))}
+  .rr .rn{grid-column:1/-1}
+  .ar{grid-template-columns:minmax(0,1.2fr) repeat(3,minmax(0,1fr));font-size:13px}
+  .years{gap:4px}.yv{font-size:9px}
+  .pc-steps button{font-size:11px;padding:7px 9px}
+}
+@media(prefers-reduced-motion:reduce){.arrow.on line{animation:none}.news .skel{animation:none}}

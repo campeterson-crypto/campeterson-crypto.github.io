@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ski Pass Calculator | Cameron Peterson</title>
+<meta name="description" content="Enter your ski days by resort and see whether an Ikon Pass, Epic Pass, both, or day tickets costs least for 2026-27, friend tickets included.">
+<link rel="canonical" href="https://campeterson-crypto.github.io/ski.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cameron Peterson">
+<meta property="og:title" content="Ski Pass Calculator | Cameron Peterson">
+<meta property="og:description" content="Enter your ski days by resort and see whether an Ikon Pass, Epic Pass, both, or day tickets costs least for 2026-27, friend tickets included.">
+<meta property="og:url" content="https://campeterson-crypto.github.io/ski.html">
+<meta property="og:image" content="https://campeterson-crypto.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cameron Peterson, personal site">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=7">
+</head>
+<body><main id="m">
+<section class="band"><div class="wrap">
+  <a class="crumb" href="projects.html">← Projects</a><br>
+  <a class="eyebrow" href="projects.html">Personal Finance</a>
+  <h1>Ski Pass Calculator</h1>
+  <p class="lede">Before the season starts, estimate how many days you'll ski at each resort and see whether an Ikon Pass, an Epic Pass, both, or plain day tickets costs the least. It counts each pass's day limits and holiday blackouts, plus the discounted friend tickets each pass includes.</p>
+</div></section>
+<section class="band"><div class="wrap tk">
+  <div id="form">
+    <div class="banner" id="exBanner" hidden>You're looking at an <b>example season</b> for a Bay Area skier. Change the days to match yours, or <button class="linkbtn" type="button" data-act="fresh">start from zero</button>.</div>
+
+    <div class="step"><p class="label">01 — Who's skiing</p>
+      <div class="field"><span>Age on the pass</span>
+        <div class="chips sm" role="group" aria-label="Age"><button class="chip" type="button" data-act="age" data-v="31+">31+</button><button class="chip" type="button" data-act="age" data-v="23-30">23–30</button><button class="chip" type="button" data-act="age" data-v="13-22">13–22</button><button class="chip" type="button" data-act="age" data-v="5-12">5–12</button></div>
+        <p class="note">Pass prices depend on age: Epic discounts ages 13–30; Ikon discounts ages 13–22.</p>
+      </div>
+      <div class="field"><span>Options</span>
+        <div class="chips sm"><button class="chip" type="button" data-act="toggle" data-v="friends">Count friend-ticket savings</button><button class="chip" type="button" data-act="toggle" data-v="holidays">I'll ski some holiday dates</button></div>
+        <p class="note" id="holNote" hidden>Holiday blackout dates for Base and Local passes: Dec 26–30, MLK weekend (Jan 16–17) and Presidents' Day weekend (Feb 13–14). Enter how many of your days fall on them.</p>
+      </div>
+    </div>
+
+    <div class="step"><p class="label">02 — Your ski days</p>
+      <p class="hint">For each resort, enter the days you expect to ski, the days a friend would join you (they'd use your discounted friend tickets), and what a day ticket usually costs there. Prices are typical-day estimates; change them to what you'd actually pay.</p>
+      <div id="regions"></div>
+      <button class="add" type="button" data-act="addcustom">+ Add another resort</button>
+    </div>
+
+    <div class="step"><p class="label">03 — Assumptions</p>
+      <details class="cat"><summary><span class="cn">Pass prices &amp; friend tickets</span><span class="sub mono-s" id="asOf">as of Oct 10, 2026</span></summary>
+        <div class="catbody" id="assume"></div>
+      </details>
+    </div>
+  </div>
+
+  <aside class="out tall" aria-label="Pass comparison">
+    <div class="outhead"><p class="label">Best value</p><span class="wc" id="dayCount"></span></div>
+    <div class="big"><span class="k" id="bestK">Best option</span><span class="v" id="bestV">–</span><span class="bn" id="bestNote"></span></div>
+    <p class="label" style="margin-top:26px">All options, net cost for the season</p>
+    <div id="opts" class="opts"></div>
+    <p class="label">Things to know</p>
+    <ul class="checks" id="check"></ul>
+    <p class="minor"><button class="linkbtn" type="button" data-act="example">Load example season</button> · <button class="linkbtn" type="button" data-act="fresh">Clear all days</button></p>
+    <p class="privacy">Prices are estimates from published 2026–27 pass prices and typical day-ticket rates, which change often. Check ikonpass.com and epicpass.com before buying; passes go off sale in early December.</p>
+  </aside>
+</div></section>
+</main>
+<script src="site.js?v=7"></script><script>
+shell("Projects");
+const $=i=>document.getElementById(i),KEY="cp-ski-v1";
+const uid=()=>Math.random().toString(36).slice(2,9);
+const num=v=>{const n=parseFloat(String(v??"").replace(/[$,\s%]/g,""));return isFinite(n)&&n>0?n:0};
+const usd=new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0});
+const $f=n=>usd.format(Math.round(n)||0);
+const sum=a=>a.reduce((s,n)=>s+n,0);
+
+// ---------- pass data (2026–27, as of Oct 10, 2026) ----------
+const PASSES={ikon:"Ikon Pass",base:"Ikon Base",epic:"Epic Pass",local:"Epic Local"};
+const PRICES={"31+":{ikon:1529,base:1099,epic:1169,local:869},"23-30":{ikon:1529,base:1099,epic:929,local:689},"13-22":{ikon:1129,base:799,epic:929,local:689},"5-12":{ikon:499,base:399,epic:599,local:455}};
+const FRIEND={ikon:{n:15,d:25},base:{n:10,d:25},epic:{n:6,d:50},local:{n:6,d:50}};
+// access codes: U = unlimited, a number = day limit, B = holiday blackouts apply, :grp = days shared across resorts
+const GROUPS={as:"Alta + Snowbird",vbc:"Vail + Beaver Creek"};
+const R=(key,name,price,acc,extra={})=>({key,name,price,acc,...extra});
+const REGIONS=[
+ ["Tahoe & California",[
+  R("palisades","Palisades Tahoe",229,{ikon:"U",base:"UB"}),
+  R("northstar","Northstar",209,{epic:"U",local:"UB"}),
+  R("heavenly","Heavenly",209,{epic:"U",local:"UB"}),
+  R("kirkwood","Kirkwood",159,{epic:"U",local:"UB"}),
+  R("mammoth","Mammoth Mountain",199,{ikon:"U",base:"UB"})]],
+ ["Utah",[
+  R("alta","Alta",189,{ikon:"7:as"}),
+  R("snowbird","Snowbird",199,{ikon:"7:as",base:"5B"}),
+  R("brighton","Brighton",149,{ikon:"7",base:"5B"}),
+  R("solitude","Solitude",169,{ikon:"U",base:"UB"}),
+  R("deervalley","Deer Valley",299,{ikon:"7"}),
+  R("snowbasin","Snowbasin",189,{ikon:"7"}),
+  R("parkcity","Park City",289,{epic:"U",local:"UB"})]],
+ ["Colorado",[
+  R("vail","Vail",299,{epic:"U",local:"10B:vbc"}),
+  R("beaver","Beaver Creek",299,{epic:"U",local:"10B:vbc"}),
+  R("breck","Breckenridge",269,{epic:"U",local:"U"}),
+  R("keystone","Keystone",199,{epic:"U",local:"U"}),
+  R("crested","Crested Butte",179,{epic:"U",local:"U"}),
+  R("telluride","Telluride",229,{epic:"7"},{partner:{epic:1}}),
+  R("copper","Copper Mountain",199,{ikon:"U",base:"U"}),
+  R("winterpark","Winter Park",199,{ikon:"U",base:"U"}),
+  R("steamboat","Steamboat",229,{ikon:"U",base:"5B"}),
+  R("abasin","Arapahoe Basin",149,{ikon:"U",base:"U"}),
+  R("eldora","Eldora",149,{ikon:"U",base:"U"}),
+  R("aspen","Aspen Snowmass",249,{ikon:"7",base:"5B"},{note:"Base Pass: Snowmass only"})]],
+ ["Wyoming, Montana & Idaho",[
+  R("jackson","Jackson Hole",269,{ikon:"7"}),
+  R("bigsky","Big Sky",249,{ikon:"7",base:"5B"}),
+  R("sunvalley","Sun Valley",199,{ikon:"7"})]],
+ ["Pacific Northwest & Canada",[
+  R("whistler","Whistler Blackcomb",229,{epic:"U",local:"10B"}),
+  R("stevens","Stevens Pass",129,{epic:"U",local:"U"}),
+  R("revelstoke","Revelstoke",189,{ikon:"7",base:"5B"}),
+  R("banff","Banff / Lake Louise (SkiBig3)",199,{ikon:"7"})]]];
+const ALL=REGIONS.flatMap(([,rs])=>rs);
+const parseAcc=c=>{if(!c)return null;const m=/^(U|\d+)(B?)(?::(\w+))?$/.exec(c);return m?{u:m[1]=="U",n:m[1]=="U"?Infinity:+m[1],b:!!m[2],g:m[3]||null}:null};
+const accText=c=>{const a=parseAcc(c);if(!a)return"";return (a.u?"unlimited":a.n+" days")+(a.g?` shared (${GROUPS[a.g]})`:"")+(a.b?", holiday blackouts":"")};
+
+// ---------- state ----------
+function blank(){return{v:1,example:false,age:"31+",friends:true,holidays:false,days:{},custom:[],prices:{...PRICES["31+"]},ft:JSON.parse(JSON.stringify(FRIEND)),open:{"Tahoe & California":true}}}
+function example(){const s=blank();s.example=true;s.age="23-30";s.prices={...PRICES["23-30"]};
+  s.days={palisades:{d:"6",f:"2"},heavenly:{d:"2",f:"1"},kirkwood:{d:"1"},mammoth:{d:"2"},alta:{d:"2"},snowbird:{d:"2"}};
+  s.open={"Tahoe & California":true,"Utah":true};return s}
+let S;try{S=JSON.parse(localStorage.getItem(KEY))}catch{}
+if(!S||typeof S!="object"||!S.days)S=example();else S=Object.assign(blank(),S);
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch{}};
+const day=k=>S.days[k]||(S.days[k]={});
+const priceOf=r=>{const p=day(r.key).p;return p!=null&&p!==""?num(p):r.price};
+
+// ---------- form ----------
+const inp=(k,f,val,label,ph)=>`<label class="mini"><span>${label}</span><input data-k="${k}" data-f="${f}" value="${val??""}" inputmode="decimal" placeholder="${ph}"></label>`;
+function resortRow(r){const d=day(r.key),acc=Object.keys(PASSES).filter(p=>r.acc[p]).map(p=>`<span class="pk ${p.startsWith("i")||p=="base"?"ik":"ep"}">${PASSES[p]}</span> ${accText(r.acc[p])}`).join("<br>");
+  return `<div class="rr${num(d.d)?" on":""}" data-row="${r.key}"><div class="rn"><b>${esc(r.name)}</b><span class="acc">${acc||"Not on Ikon or Epic"}${r.note?`<br><i>${esc(r.note)}</i>`:""}</span></div>
+${inp(r.key,"d",d.d,"Days","0")}${inp(r.key,"f",d.f,"Friend days","0")}${S.holidays?inp(r.key,"h",d.h,"Holiday days","0"):""}${inp(r.key,"p",d.p??"","Day ticket",String(r.price))}</div>`}
+function renderForm(){
+  $("regions").style.setProperty("--cols",S.holidays?4:3);
+  $("regions").innerHTML=REGIONS.map(([name,rs])=>{const tot=sum(rs.map(r=>num(day(r.key).d)));
+    return `<details class="cat" data-region="${esc(name)}"${S.open[name]?" open":""}><summary><span class="cn">${esc(name)}</span><span class="sub mono-s" data-rtot="${esc(name)}">${tot?tot+" days":""}</span></summary><div class="catbody">${rs.map(resortRow).join("")}</div></details>`}).join("")
+  +(S.custom.length?`<details class="cat" open><summary><span class="cn">Your other resorts</span></summary><div class="catbody">${S.custom.map(c=>`<div class="rr on" data-row="${c.id}"><div class="rn"><input data-c="${c.id}" data-f="name" value="${esc(c.name)}" placeholder="Resort name" aria-label="Resort name"><select data-c="${c.id}" data-f="acc" aria-label="Which pass covers it"><option value="none"${c.acc=="none"?" selected":""}>Not on Ikon or Epic</option><option value="ikon"${c.acc=="ikon"?" selected":""}>Ikon Pass, unlimited</option><option value="ikon7"${c.acc=="ikon7"?" selected":""}>Ikon Pass, 7 days</option><option value="epic"${c.acc=="epic"?" selected":""}>Epic Pass, unlimited</option></select><button class="x" type="button" data-act="delcustom" data-id="${c.id}" aria-label="Remove resort">×</button></div>
+${["d","f"].concat(S.holidays?["h"]:[],["p"]).map(f=>`<label class="mini"><span>${{d:"Days",f:"Friend days",h:"Holiday days",p:"Day ticket"}[f]}</span><input data-c="${c.id}" data-f="${f}" value="${esc(c[f]??"")}" inputmode="decimal" placeholder="${f=="p"?"$150":"0"}"></label>`).join("")}</div>`).join("")}</div></details>`:"");
+  $("assume").innerHTML=`<p class="note" style="margin-top:10px">Prices for the selected age. Edit any number if prices change or you have a different deal.</p>
+<div class="atable" role="table">
+<div class="ar ah" role="row"><span role="columnheader">Pass</span><span role="columnheader">Price</span><span role="columnheader">Friend tickets</span><span role="columnheader">Discount</span></div>
+${Object.entries(PASSES).map(([p,n])=>`<div class="ar" role="row"><span role="cell">${n}</span><input data-pp="${p}" value="${S.prices[p]}" inputmode="decimal" aria-label="${n} price"><input data-ftn="${p}" value="${S.ft[p].n}" inputmode="numeric" aria-label="${n} friend tickets"><input data-ftd="${p}" value="${S.ft[p].d}" inputmode="decimal" aria-label="${n} friend discount %"></div>`).join("")}</div>
+<p class="note">Epic Friend Tickets are 50% off at Vail Resorts–owned mountains (not partners like Telluride). Ikon Friends &amp; Family tickets are 25% off the window rate. Epic gave 10 friend tickets to early buyers and 6 to later ones.</p>`;
+  syncChips();
+}
+function syncChips(){
+  document.querySelectorAll('[data-act="age"]').forEach(b=>b.setAttribute("aria-pressed",b.dataset.v==S.age));
+  document.querySelectorAll('[data-act="toggle"]').forEach(b=>b.setAttribute("aria-pressed",!!S[b.dataset.v]));
+  $("holNote").hidden=!S.holidays;$("exBanner").hidden=!S.example;
+}
+
+// ---------- math ----------
+const customAcc=c=>({none:{},ikon:{ikon:"U"},ikon7:{ikon:"7"},epic:{epic:"U"}}[c.acc]||{});
+function skiRows(){
+  const rows=ALL.map(r=>{const d=day(r.key);return{key:r.key,name:r.name,acc:r.acc,partner:r.partner||{},d:num(d.d),f:num(d.f),h:S.holidays?Math.min(num(d.h),num(d.d)):0,p:priceOf(r)}});
+  S.custom.forEach(c=>rows.push({key:c.id,name:c.name||"Other resort",acc:customAcc(c),partner:{},d:num(c.d),f:num(c.f),h:S.holidays?Math.min(num(c.h),num(c.d)):0,p:num(c.p)||150}));
+  return rows.filter(r=>r.d>0||r.f>0);
+}
+// Cost of one option (a list of passes). Day limits are spent at the priciest resorts first.
+function price(passes,rows){
+  const quota={},notes=[];let tickets=0,covered=0,passCost=sum(passes.map(p=>num(S.prices[p])));
+  [...rows].sort((a,b)=>b.p-a.p).forEach(r=>{
+    let left=r.d,holLeft=r.h;
+    // try unlimited-without-blackout first, then limited, across the passes in this option
+    const accs=passes.map(p=>({p,a:parseAcc(r.acc[p])})).filter(x=>x.a).sort((x,y)=>(y.a.u-x.a.u)||(x.a.b-y.a.b));
+    for(const {p,a} of accs){if(left<=0)break;
+      const qk=p+":"+(a.g||r.key),q=quota[qk]??a.n;
+      // blackout passes can't cover holiday days; passes without blackouts take the holiday days first
+      const usable=a.b?Math.min(left-holLeft,q):Math.min(left,q);
+      if(usable<=0)continue;
+      const fromHol=a.b?0:Math.min(holLeft,usable);holLeft-=fromHol;left-=usable;covered+=usable;quota[qk]=q-usable}
+    if(left>0&&accs.length){const lim=accs.find(x=>!x.a.u),nonHol=left-holLeft;
+      if(nonHol>0&&lim)notes.push(`${r.name}: ${nonHol} of your ${r.d} days ${nonHol>1?"go":"goes"} past the ${PASSES[lim.p]}'s ${lim.a.n}-day limit${lim.a.g?` (shared across ${GROUPS[lim.a.g]})`:""}, so they're priced at day-ticket rates.`);
+      if(holLeft>0&&accs.every(x=>x.a.b))notes.push(`${r.name}: holiday days aren't covered by the ${accs.map(x=>PASSES[x.p]).join(" or ")}.`)}
+    tickets+=left*r.p});
+  // friend tickets: biggest discount first, at the priciest eligible resorts
+  let fsave=0,fused=0;
+  if(S.friends&&passes.length){
+    const fdays=rows.flatMap(r=>Array.from({length:Math.round(r.f)},()=>r));const taken=new Array(fdays.length).fill(false);
+    [...passes].sort((a,b)=>num(S.ft[b].d)-num(S.ft[a].d)).forEach(p=>{let n=Math.round(num(S.ft[p].n));const d=num(S.ft[p].d)/100;
+      fdays.map((r,i)=>({r,i})).filter(x=>!taken[x.i]&&x.r.acc[p]&&!x.r.partner[p]).sort((a,b)=>b.r.p-a.r.p).forEach(x=>{if(n>0){taken[x.i]=true;n--;fused++;fsave+=x.r.p*d}})});
+  }
+  return{passCost,tickets,fsave,fused,covered,net:passCost+tickets-fsave,notes};
+}
+const OPTIONS=[["none","Day tickets only",[]],["ikon","Ikon Pass",["ikon"]],["base","Ikon Base Pass",["base"]],["epic","Epic Pass",["epic"]],["local","Epic Local Pass",["local"]],["ie","Ikon + Epic",["ikon","epic"]],["bl","Ikon Base + Epic Local",["base","local"]]];
+
+function update(){
+  const rows=skiRows(),days=sum(rows.map(r=>r.d));
+  REGIONS.forEach(([name,rs])=>{const el=document.querySelector(`[data-rtot="${CSS.escape(name)}"]`);if(el){const t=sum(rs.map(r=>num(day(r.key).d)));el.textContent=t?t+(t>1?" days":" day"):""}});
+  document.querySelectorAll(".rr[data-row]").forEach(el=>{const r=rows.find(x=>x.key==el.dataset.row);el.classList.toggle("on",!!(r&&r.d))});
+  $("dayCount").textContent=days?`${days} ski day${days>1?"s":""}`:"";
+  if(!days){$("bestV").textContent="–";$("bestK").textContent="Best option";$("bestNote").textContent="Enter your ski days in step 02 to compare passes.";$("opts").innerHTML="";renderChecks($("check"),["Open a region and enter how many days you expect to ski at each resort."]);return}
+  const res=OPTIONS.map(([k,n,ps])=>({k,n,ps,...price(ps,rows)})).sort((a,b)=>a.net-b.net);
+  const best=res[0],none=res.find(x=>x.k=="none"),max=Math.max(...res.map(r=>r.net));
+  $("bestK").textContent="Cheapest: "+best.n;
+  $("bestV").textContent=$f(best.net);
+  $("bestNote").textContent=best.k=="none"?`Day tickets beat every pass for ${days} days. A pass starts to make sense if you add more days.`:`${$f(best.net/days)} per ski day · saves ${$f(none.net-best.net)} vs. day tickets`;
+  $("opts").innerHTML=res.map((o,i)=>`<div class="opt${i==0?" best":""}"><div class="top"><span>${o.n}${i==0?' <span class="tag need">Best</span>':""}</span><span class="money"><b>${$f(o.net)}</b></span></div>
+<div class="track"><div class="fill ${o.k=="none"?"rest":o.ps.length>1?"save":(o.ps[0]=="ikon"||o.ps[0]=="base")?"need":"want"}" style="width:${max?o.net/max*100:0}%"></div></div>
+<p class="od">${o.ps.length?`Pass ${$f(o.passCost)}`:""}${o.tickets?`${o.ps.length?" + ":""}day tickets ${$f(o.tickets)}`:""}${o.fsave?` − friend savings ${$f(o.fsave)} (${o.fused} ticket${o.fused>1?"s":""})`:""}${o.ps.length?` · covers ${o.covered} of ${days} days`:""} · ${$f(o.net/days)}/day</p></div>`).join("");
+  // notes
+  const c=[];
+  if(best.k!="none"&&best.ps.length){const avg=sum(rows.map(r=>r.p*r.d))/days;c.push(`At your average day-ticket price of about ${$f(avg)}, the ${best.n} pays for itself after roughly ${Math.ceil(best.passCost/avg)} covered days.`)}
+  if(best.k!="none"&&res[1])c.push(`Runner-up: ${res[1].n}, ${$f(res[1].net-best.net)} more for the season.`);
+  best.notes.forEach(n=>c.push(esc(n)));
+  if(S.friends&&!rows.some(r=>r.f))c.push("Adding friend days shows what your included friend tickets are worth: 50% off with Epic, 25% off with Ikon.");
+  if(!S.holidays)c.push("Planning to ski Dec 26–30, MLK or Presidents' Day weekend? Turn on holiday dates in step 01. Base and Local passes are blacked out on those days at many resorts.");
+  c.push("Day-ticket prices swing a lot by date and how far ahead you buy. If you'd buy tickets early online, lower the prices in step 02.");
+  renderChecks($("check"),c);
+}
+
+// ---------- events ----------
+$("form").addEventListener("input",e=>{const t=e.target;
+  if(t.dataset.k){day(t.dataset.k)[t.dataset.f]=t.value}
+  else if(t.dataset.c){const c=S.custom.find(x=>x.id==t.dataset.c);if(c)c[t.dataset.f]=t.value}
+  else if(t.dataset.pp)S.prices[t.dataset.pp]=t.value;
+  else if(t.dataset.ftn)S.ft[t.dataset.ftn].n=t.value;
+  else if(t.dataset.ftd)S.ft[t.dataset.ftd].d=t.value;
+  else return;
+  if(S.example){S.example=false;syncChips()}save();update()});
+$("form").addEventListener("change",e=>{if(e.target.tagName=="SELECT"){const c=S.custom.find(x=>x.id==e.target.dataset.c);if(c){c.acc=e.target.value;save();update()}}});
+$("form").addEventListener("toggle",e=>{const d=e.target;if(d.dataset&&d.dataset.region){S.open[d.dataset.region]=d.open;save()}},true);
+document.addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;const v=b.dataset.v;
+  switch(b.dataset.act){
+    case"age":S.age=v;S.prices={...PRICES[v]};renderForm();break;
+    case"toggle":S[v]=!S[v];if(v=="holidays")renderForm();break;
+    case"addcustom":{const c={id:uid(),name:"",acc:"none",d:"",f:"",h:"",p:""};S.custom.push(c);renderForm();const el=document.querySelector(`[data-c="${c.id}"]`);if(el)el.focus();break}
+    case"delcustom":S.custom=S.custom.filter(c=>c.id!=b.dataset.id);renderForm();break;
+    case"example":S=example();renderForm();break;
+    case"fresh":{const keep={age:S.age,prices:S.prices,ft:S.ft,friends:S.friends,holidays:S.holidays};S=Object.assign(blank(),keep);renderForm();break}
+    default:return}
+  if(!["example"].includes(b.dataset.act))S.example=false;syncChips();save();update()});
+renderForm();update();
+</script></body></html>

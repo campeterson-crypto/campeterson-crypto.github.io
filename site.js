@@ -54,7 +54,11 @@ const SITE={
     {title:"Cover Letter Builder",url:"cover-letter.html",desc:"Paste a job description and your background to get a prompt that writes a specific, non-generic cover letter."}
   ],
   finance:[
-    {title:"Budget Planner",url:"budget.html",desc:"Plan a monthly budget with income, expenses by category, savings goals, a 50/30/20 check and a debt payoff plan."}
+    {title:"Budget Planner",url:"budget.html",desc:"Plan a monthly budget with income, expenses by category, savings goals, a 50/30/20 check and a debt payoff plan."},
+    {title:"Ski Pass Calculator",url:"ski.html",desc:"Plan your ski days by resort and see whether an Ikon or Epic pass, or day tickets, costs least, friend tickets included."}
+  ],
+  explainers:[
+    {k:"Explainer",title:"How a private credit fund works",url:"private-credit.html",desc:"An interactive walkthrough of how LP capital becomes loans to PE-backed companies, and how the cash comes back through the waterfall and carry."}
   ],
   projects:[         // {title:"", url:"", desc:""}: anything beyond the toolkit (url optional)
     {title:"Haas cohort calendar",desc:"A Canvas-integrated calendar and assignment tracker for my MBA cohort, built with Claude Code."}
@@ -63,7 +67,7 @@ const SITE={
 };
 
 // ---------- shared page chrome ----------
-const NAV=[["Home","index.html"],["Projects","projects.html"],["Essays","essays.html"],["CV","cv.html"]];
+const NAV=[["Home","index.html"],["Projects","projects.html"],["Sports","sports.html"],["Essays","essays.html"],["CV","cv.html"]];
 function shell(active){
   const nav=NAV.filter(l=>l[0]!="Essays"||SITE.essays.length);
   document.body.insertAdjacentHTML("afterbegin",`<a class="skip" href="#m">Skip to content</a><header><div class="wrap">

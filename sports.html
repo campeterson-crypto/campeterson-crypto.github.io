@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sports | Cameron Peterson</title>
+<meta name="description" content="Live headlines, records and next games for the LA Chargers, Denver Nuggets, Colorado Avalanche and Colorado Buffaloes.">
+<link rel="canonical" href="https://campeterson-crypto.github.io/sports.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Cameron Peterson">
+<meta property="og:title" content="Sports | Cameron Peterson">
+<meta property="og:description" content="Live headlines, records and next games for the LA Chargers, Denver Nuggets, Colorado Avalanche and Colorado Buffaloes.">
+<meta property="og:url" content="https://campeterson-crypto.github.io/sports.html">
+<meta property="og:image" content="https://campeterson-crypto.github.io/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cameron Peterson, personal site">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="stylesheet" href="style.css?v=7">
+</head>
+<body><main id="m">
+<section class="band"><div class="wrap">
+  <p class="eyebrow">Sports</p>
+  <h1>My teams</h1>
+  <p class="lede">The latest headlines, records and next games for the Chargers, Nuggets, Avalanche and Buffs, pulled live from ESPN every time you open this page and refreshed every 5 minutes while it's open.</p>
+  <div class="refresh"><span id="updated" class="mono-s" role="status">Loading…</span><button class="btn ghost" type="button" id="reload">Refresh now</button></div>
+</div></section>
+<section class="band"><div class="wrap"><div class="teams" id="teams"></div>
+<p class="note" style="margin-top:28px">Headlines and scores come from ESPN. Links open the full story on espn.com.</p></div></section>
+</main>
+<script src="site.js?v=7"></script><script>
+shell("Sports");
+const API="https://site.api.espn.com/apis/site/v2/sports/";
+const TEAMS=[
+  {key:"lac",league:"NFL",feeds:[["football/nfl",24]]},
+  {key:"den",league:"NBA",feeds:[["basketball/nba",7]]},
+  {key:"col",league:"NHL",feeds:[["hockey/nhl",17]]},
+  {key:"cu",league:"NCAA",feeds:[["football/college-football",38],["basketball/mens-college-basketball",38]],tags:{"football/college-football":"Football","basketball/mens-college-basketball":"Basketball"}}];
+const $=i=>document.getElementById(i);
+const rtf=new Intl.RelativeTimeFormat("en",{numeric:"auto"});
+function ago(iso){const s=(new Date(iso)-Date.now())/1000,a=Math.abs(s);
+  return a<60?"just now":a<3600?rtf.format(Math.round(s/60),"minute"):a<86400?rtf.format(Math.round(s/3600),"hour"):a<86400*7?rtf.format(Math.round(s/86400),"day"):new Date(iso).toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+const when=iso=>new Date(iso).toLocaleString("en-US",{weekday:"short",month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+const getJSON=u=>fetch(u,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+const score=c=>c&&c.score!=null?(typeof c.score=="object"?c.score.displayValue:c.score):"";
+
+// one card shell per team so the page has structure before data arrives
+$("teams").innerHTML=TEAMS.map(t=>`<article class="team" id="t-${t.key}" aria-busy="true"><div class="thead"><div class="tlogo"></div><div><h2 class="tname">&nbsp;</h2><p class="tmeta">${t.league}</p></div></div><ul class="news"><li class="skel"></li><li class="skel"></li><li class="skel"></li></ul></article>`).join("");
+
+// one game from the team's point of view: "W 104–91 at NO", "vs CGY · Sat, Nov 1, 4:00 PM", or live score
+function gameLine(ev,teamId,kind){
+  if(!ev)return"";
+  const comp=ev.competitions&&ev.competitions[0]||{},st=comp.status&&comp.status.type||{};
+  const cs=comp.competitors||[],us=cs.find(c=>String(c.id||c.team&&c.team.id)==String(teamId))||cs[0]||{},them=cs.find(c=>c!==us)||{};
+  const opp=`${us.homeAway=="away"?"at":"vs"} ${esc(them.team&&them.team.abbreviation||"")}`;
+  if(st.state=="in")return `<p class="game live"><span class="gk">Live</span>${esc(score(us))}–${esc(score(them))} ${opp} <span class="mut">· ${esc(st.shortDetail||"")}</span></p>`;
+  if(st.state=="post"){const res=us.winner?"W":them.winner?"L":"T";return `<p class="game"><span class="gk">Last</span>${res} ${esc(score(us))}–${esc(score(them))} ${opp} <span class="mut">· ${new Date(ev.date).toLocaleDateString("en-US",{month:"short",day:"numeric"})}</span></p>`}
+  return `<p class="game"><span class="gk">Next</span>${opp} <span class="mut">· ${when(ev.date)}</span></p>`;
+}
+const SLUG={"football/nfl":"nfl","basketball/nba":"nba","hockey/nhl":"nhl","football/college-football":"college-football"};
+async function loadTeam(t){
+  const el=$("t-"+t.key),[path,id]=t.feeds[0];
+  try{
+    const [sched,...feeds]=await Promise.all([getJSON(`${API}${path}/teams/${id}/schedule`),...t.feeds.map(([p,tid])=>getJSON(`${API}${p}/news?team=${tid}&limit=8`).then(j=>(j.articles||[]).map(a=>({...a,_tag:t.tags&&t.tags[p]}))))]);
+    const tm=sched.team||{},evs=sched.events||[],seen=new Set();
+    const live=evs.find(e=>((e.competitions[0]||{}).status||{}).type&&e.competitions[0].status.type.state=="in");
+    const past=evs.filter(e=>e.competitions[0].status.type.state=="post"),last=past[past.length-1];
+    const next=evs.find(e=>e.competitions[0].status.type.state=="pre");
+    const arts=feeds.flat().filter(a=>a.headline&&!seen.has(a.id)&&seen.add(a.id)).sort((a,b)=>new Date(b.published)-new Date(a.published)).slice(0,6);
+    el.innerHTML=`<div class="thead">${tm.logo?`<img class="tlogo" src="${esc(tm.logo)}" alt="" width="44" height="44">`:`<div class="tlogo"></div>`}
+<div><h2 class="tname">${esc(tm.displayName||"")}</h2><p class="tmeta">${t.league}${tm.recordSummary?` · ${esc(tm.recordSummary)}`:""}${tm.standingSummary?` · ${esc(tm.standingSummary)}`:""}</p></div></div>
+${live?gameLine(live,id):gameLine(last,id)+gameLine(next,id)}
+<ul class="news">${arts.length?arts.map((a,i)=>`<li><a href="${esc(a.links&&a.links.web&&a.links.web.href||"https://www.espn.com")}" target="_blank" rel="noopener">${esc(a.headline)}</a>${i==0&&a.description?`<p class="desc">${esc(a.description)}</p>`:""}<span class="when">${a._tag?esc(a._tag)+" · ":""}${ago(a.published)}</span></li>`).join(""):`<li class="mut">No recent headlines.</li>`}</ul>
+<a class="more" href="https://www.espn.com/${SLUG[path]}/team/_/id/${id}" target="_blank" rel="noopener">More on ESPN ↗</a>`;
+    el.removeAttribute("aria-busy");return true;
+  }catch(err){
+    el.querySelector(".news").innerHTML=`<li class="mut">Couldn't load the latest news right now. ESPN may be busy; try Refresh in a minute.</li>`;
+    el.removeAttribute("aria-busy");return false;
+  }
+}
+let last=0;
+async function loadAll(){
+  $("reload").disabled=true;$("updated").textContent="Updating…";
+  const ok=await Promise.all(TEAMS.map(loadTeam));last=Date.now();
+  $("reload").disabled=false;tick();
+  if(!ok.some(Boolean))$("updated").textContent="Couldn't reach ESPN. Check your connection and try again.";
+}
+function tick(){if(last&&!$("reload").disabled)$("updated").textContent="Updated "+ago(new Date(last).toISOString())+" · refreshes every 5 minutes"}
+$("reload").addEventListener("click",loadAll);
+setInterval(loadAll,5*60*1000);
+setInterval(tick,30*1000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&Date.now()-last>2*60*1000)loadAll()});
+loadAll();
+</script></body></html>
