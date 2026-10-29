@@ -18,9 +18,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
-<body><main id="m"></main><script src="site.js?v=4"></script><script>
+<body><main id="m"></main><script src="site.js?v=5"></script><script>
 shell("Essays");
 m.innerHTML=band(`<p class="eyebrow">Essays</p><h1>Writing</h1>${SITE.essays.length?`<ul class="items">${SITE.essays.map(e=>`<li><span class="when">${e.date||""}</span><br><a class="t" href="${e.url}">${e.title}</a></li>`).join("")}</ul>`:`<p class="lede">The first essay is on its way. In the meantime, try the <a href="toolkit.html">Prompt Builder</a>.</p>`}`);
 </script></body></html>

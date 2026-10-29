@@ -120,3 +120,4 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--blue);outline-of
   .chip{padding:9px 11px}
 }
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+.org{font-weight:500;color:var(--fg)}

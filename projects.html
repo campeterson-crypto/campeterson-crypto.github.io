@@ -18,12 +18,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=4">
+<link rel="stylesheet" href="style.css?v=5">
 </head>
-<body><main id="m"></main><script src="site.js?v=4"></script><script>
+<body><main id="m"></main><script src="site.js?v=5"></script><script>
 shell("Projects");
 const card=t=>`<a class="card" href="${t.url}"><span class="k">Tool</span><span class="t">${t.title}</span><span class="d">${t.desc}</span><span class="go">Open →</span></a>`;
 m.innerHTML=band(`<p class="eyebrow">Projects</p><h1>What I'm building</h1><p class="lede" style="margin-bottom:44px">Small, useful tools, starting with a toolkit for getting better answers out of AI models. Everything runs in your browser; nothing you type is sent anywhere.</p>
 <h3>AI Prompting Toolkit</h3><p class="lede" style="margin-bottom:20px">Structured forms that turn what you know into a clear prompt for any LLM.</p><div class="cards">${SITE.tools.map(card).join("")}</div>
-${SITE.projects.length?`<h3 style="margin-top:56px">Other projects</h3><ul class="items">${SITE.projects.map(p=>`<li><a class="t" href="${p.url}">${p.title}</a><div class="d">${p.desc}</div></li>`).join("")}</ul>`:""}`);
+${SITE.projects.length?`<h3 style="margin-top:56px">Other projects</h3><ul class="items">${SITE.projects.map(p=>`<li>${p.url?`<a class="t" href="${p.url}">${p.title}</a>`:`<span class="t">${p.title}</span>`}<div class="d">${p.desc}</div></li>`).join("")}</ul>`:""}`);
 </script></body></html>
