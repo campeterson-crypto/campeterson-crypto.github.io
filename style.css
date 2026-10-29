@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Space+Mono:wght@400;700&display=swap");
 /* Always white, like Ian's. Forest green for headings/chips, ocean blue for links/nav/actions. */
-:root{--bg:#ffffff;--fg:#1e2b26;--mut:#5c6a64;--blue:#1b6a96;--green:#2e5e3e;--teal:#2f7f8a;--deep:#234a30;--tint:#f4f8f6;--edge:#d3e2da;--line:#e9efec;--bad:#b3261e;--needbg:#e3efe7;--wantbg:#e1eef6;--debtbg:#e0f0f1;--gold:#a8741a;--goldlt:#d9ad5b;
+:root{--bg:#ffffff;--fg:#1e2b26;--mut:#5c6a64;--blue:#1b6a96;--green:#2e5e3e;--teal:#2f7f8a;--deep:#234a30;--tint:#f4f8f6;--edge:#d3e2da;--line:#e9efec;--bad:#b3261e;--needbg:#e3efe7;--wantbg:#e1eef6;--debtbg:#e0f0f1;--gold:#a8741a;--goldlt:#d9ad5b;--mint:#eef6f1;--sage:#cfe3d6;--leaf:#4f8a63;--cugold:#cfb87c;
   --serif:Lora,Georgia,serif;--mono:"Space Mono",Consolas,"Courier New",monospace;color-scheme:light}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -345,3 +345,67 @@ img.tlogo{background:none}
 .past .when{display:block}
 @media(max-width:860px){.shop{grid-template-columns:minmax(0,1fr);gap:28px}.shop-map{position:static}}
 @media(max-width:700px){.shop-name{font-size:34px}}
+
+/* ---------- more green ---------- */
+header{border-top:4px solid var(--green)}
+footer{background:var(--deep);color:#cfe3d6;border-top:0}
+footer a{color:#fff}
+main.home>.band:nth-child(even){background:var(--mint)}
+main.home>.band{border-top-color:var(--sage)}
+main.home>.band.hero{border-top:0}
+main.home>.band.hero>.wrap{padding-block:12px 56px}
+.hero-panel{position:relative;overflow:hidden;background-color:var(--deep);color:#f4faf6;border-radius:8px;padding:48px 52px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='380' viewBox='0 0 560 380'%3E%3Cg fill='none' stroke='%234f8a63' stroke-width='1.3' opacity='.55'%3E%3Cpath d='M400 50c66 10 120 64 110 130s-78 108-152 102-130-54-120-118 96-124 162-114z'/%3E%3Cpath d='M398 84c44 8 82 44 74 90s-52 76-104 72-90-38-84-82 70-88 114-80z'/%3E%3Cpath d='M396 116c26 5 48 26 44 52s-30 45-61 43-53-22-50-48 41-51 67-47z'/%3E%3Cpath d='M392 142c11 2 20 11 18 22s-13 19-25 18-22-9-21-20 17-22 28-20z'/%3E%3Cpath d='M-20 310c80-40 160-20 230 10s180 42 360-12'/%3E%3Cpath d='M-20 345c90-35 170-15 240 12s180 36 350-10'/%3E%3Cpath d='M-20 276c70-45 150-30 220 2s190 46 370-16'/%3E%3Cpath d='M30 30c52-20 114 0 134 42s-10 92-62 97-104-20-114-62 0-62 42-77z'/%3E%3Cpath d='M50 58c30-12 68 0 80 25s-6 56-37 59-62-12-68-37 0-37 25-47z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right -60px center;background-size:640px auto}
+.hero-panel .portrait{border:3px solid #fff;box-shadow:0 0 0 4px rgba(255,255,255,.12)}
+.hero-panel .intro{color:#f4faf6}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:26px 0 0}
+.hero-tags li{font:12px var(--mono);letter-spacing:.03em;color:#e3f0e7;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:3px;padding:6px 10px}
+.card:hover{background:var(--mint)}
+main.home>.band:nth-child(even) .card:hover{background:#fff}
+@media(max-width:700px){.hero-panel{padding:32px 24px;background-size:520px auto;background-position:right -160px top -40px}}
+
+/* ---------- scroll decorations (home, wide screens only) ---------- */
+.deco{position:fixed;inset:0;pointer-events:none;z-index:5;display:none}
+@media(min-width:1300px){.deco{display:block}}
+.rail{position:absolute;top:0;bottom:0;width:calc((100vw - 1000px)/2)}
+.rail.l{left:0}.rail.r{right:0}
+.rail .d{position:absolute;left:50%;transform:translateX(-50%)}
+.d-chart{top:17vh;width:150px;background:#fff;border:1px solid var(--sage);border-radius:6px;padding:10px 10px 6px;box-shadow:0 6px 18px rgba(35,74,48,.08)}
+.d-chart .tkr{display:flex;justify-content:space-between;font:11px var(--mono);color:var(--mut);margin-bottom:4px}
+.d-chart .tkr b{color:var(--green);font-weight:700}
+.d-chart svg{display:block;width:100%;height:auto;overflow:visible}
+.d-chart .grid line{stroke:var(--line);stroke-width:1}
+#dLine{fill:none;stroke:var(--green);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+#dArea{fill:var(--mint);stroke:none}
+#dDot{fill:var(--green);stroke:#fff;stroke-width:2}
+.d-candles{top:45vh;width:130px}
+.d-candles svg{display:block;width:100%;height:auto;overflow:visible}
+.cdl{transform-box:fill-box;transform-origin:center}
+.cdl line{stroke:var(--mut);stroke-width:1.5}
+.cdl.up rect{fill:var(--green)}.cdl.dn rect{fill:var(--sage)}
+.d-coin{top:63vh}
+.coin{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#6aa37d,var(--green) 70%);border:3px solid var(--cugold);color:#fff;font:700 28px var(--serif);box-shadow:0 6px 14px rgba(35,74,48,.18)}
+.d-pennant{top:77vh;width:150px}
+.d-pennant svg{display:block;width:100%;height:auto;overflow:visible}
+.d-pennant .pole{stroke:#5c6a64;stroke-width:3;stroke-linecap:round}
+.d-pennant .flag{transform-box:fill-box;transform-origin:left center}
+.d-pennant .pf{fill:#161616}.d-pennant .ph{fill:var(--cugold)}
+.d-pennant .pcu{font:700 26px var(--serif);fill:var(--cugold)}
+.d-pennant .psk{font:700 9.5px var(--mono);fill:var(--cugold);letter-spacing:.06em}
+.slope{position:absolute;top:5vh;left:50%;transform:translateX(-50%);height:92vh;width:auto;max-width:96%;overflow:visible}
+.mt-b{fill:var(--sage)}.mt-f{fill:var(--leaf)}.cap{fill:#fff}
+.piste{fill:none;stroke:var(--mint);stroke-width:30;stroke-linecap:round}
+.track{fill:none;stroke:#9cc1aa;stroke-width:2.5;stroke-linecap:round;stroke-dasharray:4 0}
+#dTrees polygon{fill:var(--green)}#dTrees rect{fill:#6b4f3a}
+.sign line{stroke:#5c6a64;stroke-width:1.5}
+.s-green{fill:#2f8f4e}.s-blue{fill:var(--blue)}.s-black{fill:#161616}
+.skier .ski{stroke:#1e2b26;stroke-width:2.5;stroke-linecap:round}
+.skier .leg{fill:none;stroke:var(--deep);stroke-width:3.2;stroke-linecap:round}
+.skier .torso{stroke:var(--green);stroke-width:6;stroke-linecap:round}
+.skier .pole{stroke:#5c6a64;stroke-width:1.4;stroke-linecap:round}
+.skier .face{fill:#f1c9a5}.skier .hat{fill:var(--blue)}
+.flakes{position:absolute;inset:0;overflow:hidden}
+.flakes i{position:absolute;top:-20px;font-style:normal;color:#a9c7b4;animation:fall linear infinite}
+@keyframes fall{from{transform:translate(0,-5vh) rotate(0)}to{transform:translate(18px,105vh) rotate(180deg)}}
+@media(prefers-reduced-motion:reduce){.flakes{display:none}}
