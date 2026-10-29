@@ -10,6 +10,7 @@ Live at **https://campeterson-crypto.github.io**, hosted free on GitHub Pages. E
 | `projects.html` | Projects, including the AI Prompting Toolkit |
 | `toolkit.html` | Prompt Builder (12 task types) |
 | `cover-letter.html` | Cover Letter Builder |
+| `budget.html` | Budget Planner: income, expenses, savings goals, emergency fund, debt payoff (saved in the visitor's browser only) |
 | `cv.html` | CV: about, experience, education, skills |
 | `essays.html` | Essays (hidden from the menu until there's at least one) |
 | `404.html` | Shown for any address that doesn't exist |
@@ -33,7 +34,9 @@ experience:[
 
 Page titles, descriptions and link previews are in the `<head>` at the top of each `.html` file.
 
-**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=4` at the end of their links in every `.html` file (to `?v=5` and so on).
+**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=6` at the end of their links in every `.html` file (to `?v=7` and so on).
+
+**Budget Planner:** the expense categories and their default line items are the `CATS` list near the top of the script in `budget.html`; the example budget's amounts are in `EX` and `example()` just below it. Visitors' budgets live only in their own browser (`localStorage`), and they can save or open them as a `.json` file.
 
 ## Images
 

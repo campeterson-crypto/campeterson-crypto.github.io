@@ -53,6 +53,9 @@ const SITE={
     {title:"Prompt Builder",url:"toolkit.html",desc:"Pick one of 12 task types, fill in what you know, and copy a structured prompt into any LLM."},
     {title:"Cover Letter Builder",url:"cover-letter.html",desc:"Paste a job description and your background to get a prompt that writes a specific, non-generic cover letter."}
   ],
+  finance:[
+    {title:"Budget Planner",url:"budget.html",desc:"Plan a monthly budget with income, expenses by category, savings goals, a 50/30/20 check and a debt payoff plan."}
+  ],
   projects:[         // {title:"", url:"", desc:""}: anything beyond the toolkit (url optional)
     {title:"Haas cohort calendar",desc:"A Canvas-integrated calendar and assignment tracker for my MBA cohort, built with Claude Code."}
   ],
