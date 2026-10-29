@@ -11,7 +11,7 @@ const SITE={
   about:[
     "I'm an MBA candidate at UC Berkeley's Haas School of Business, focused on corporate strategy and strategic finance roles in tech.",
     "Before Haas, I spent four years at Deloitte doing FP&A on the Alphabet (Google) account, first as an analyst and then as a consultant leading a small team across the US and India. From there I joined Churchill Asset Management in New York as an Associate on the fund modeling team, where I worked on the firm's first joint venture, fund sales, and the risk and liquidity analysis that went to the CFO and Board.",
-    "Somewhere along the way I got interested in how AI changes finance work. I was in the beta group that tested Deloitte's first generative AI tool for FP&A, and these days I build my own tools with Claude Code, like a Canvas-integrated calendar and assignment tracker for my Haas cohort and the prompting toolkit on this site.",
+    "Somewhere along the way I got interested in how AI changes finance work. I was in the beta group that tested Deloitte's first generative AI tool for FP&A, and these days I build my own tools with Claude Code, like the prompting toolkit and finance tools on this site.",
     "Outside of work, I once rode a bike 4,350 miles from Seattle to Washington, D.C. to raise money for people with disabilities. I ski (Snowbird and Alta are my favorites), surf, golf, and fly fish whenever I can get to Key West. I'm also on the hunt for the best Dutch crunch sandwich in San Francisco; recommendations welcome."
   ],
   email:"campeterson44@gmail.com",
@@ -61,13 +61,12 @@ const SITE={
     {k:"Explainer",title:"How a private credit fund works",url:"private-credit.html",desc:"An interactive walkthrough of how LP capital becomes loans to PE-backed companies, and how the cash comes back through the waterfall and carry."}
   ],
   projects:[         // {title:"", url:"", desc:""}: anything beyond the toolkit (url optional)
-    {title:"Haas cohort calendar",desc:"A Canvas-integrated calendar and assignment tracker for my MBA cohort, built with Claude Code."}
   ],
   essays:[]          // {title:"", url:"", date:"Oct 2026"}
 };
 
 // ---------- shared page chrome ----------
-const NAV=[["Home","index.html"],["Projects","projects.html"],["Sports","sports.html"],["Essays","essays.html"],["CV","cv.html"]];
+const NAV=[["Home","index.html"],["Projects","projects.html"],["Sports","sports.html"],["Food","sandwich.html"],["Essays","essays.html"],["CV","cv.html"]];
 function shell(active){
   const nav=NAV.filter(l=>l[0]!="Essays"||SITE.essays.length);
   document.body.insertAdjacentHTML("afterbegin",`<a class="skip" href="#m">Skip to content</a><header><div class="wrap">

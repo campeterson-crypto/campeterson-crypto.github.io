@@ -13,6 +13,7 @@ Live at **https://campeterson-crypto.github.io**, hosted free on GitHub Pages. E
 | `budget.html` | Budget Planner: income, expenses, savings goals, emergency fund, debt payoff (saved in the visitor's browser only) |
 | `ski.html` | Ski Pass Calculator: Ikon vs. Epic vs. day tickets by resort, with friend tickets |
 | `private-credit.html` | Interactive explainer of how a private credit fund, its waterfall and carry work |
+| `sandwich.html` | Sandwich Shop of the Week: a new SF or Berkeley shop every Monday, from the list in `sandwiches.js` |
 | `sports.html` | Live ESPN headlines, records and next games for the Chargers, Nuggets, Avalanche and Buffs |
 | `cv.html` | CV: about, experience, education, skills |
 | `essays.html` | Essays (hidden from the menu until there's at least one) |
@@ -37,7 +38,9 @@ experience:[
 
 Page titles, descriptions and link previews are in the `<head>` at the top of each `.html` file.
 
-**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=7` at the end of their links in every `.html` file (to `?v=8` and so on).
+**Seeing old styles after a change?** Browsers cache `style.css` and `site.js`. When you change either one, bump the `?v=8` at the end of their links in every `.html` file (to `?v=9` and so on).
+
+**Sandwich Shop of the Week:** shops live in `sandwiches.js`, one per week starting Oct 26, 2026, switching every Monday at midnight Pacific. The list of 21 runs out on Mar 22, 2027, after which it starts over. Add new shops to the END of the list (each needs name, city, neighborhood, address, lat/lon, background, favorite items and an optional tip) so past weeks stay the same.
 
 **Ski Pass Calculator:** pass prices (`PRICES`), friend tickets (`FRIEND`) and each resort's day-ticket estimate and pass access (`REGIONS`) are at the top of the script in `ski.html`. Update them each season; prices there are as of Oct 10, 2026.
 

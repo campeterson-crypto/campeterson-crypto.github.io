@@ -18,9 +18,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=7">
+<link rel="stylesheet" href="style.css?v=8">
 </head>
-<body><main id="m"></main><script src="site.js?v=7"></script><script>
+<body><main id="m"></main><script src="site.js?v=8"></script><script src="sandwiches.js?v=8"></script><script>
 shell("Home");
 const card=t=>`<a class="card" href="${t.url}"><span class="k">${t.k||"Tool"}</span><span class="t">${t.title}</span><span class="d">${t.desc}</span><span class="go">Open →</span></a>`;
 m.innerHTML=
@@ -29,6 +29,7 @@ m.innerHTML=
 +band(`<a class="eyebrow" href="projects.html">AI Prompting Toolkit</a><h2>Tools for writing better prompts</h2><div class="cards">${SITE.tools.map(card).join("")}</div>`)
 +band(`<a class="eyebrow" href="budget.html">Personal Finance</a><h2>Plan where your money goes</h2><div class="cards">${SITE.finance.map(card).join("")}</div>`)
 +band(`<a class="eyebrow" href="private-credit.html">Private Credit 101</a><h2>How the money actually moves</h2><div class="cards">${SITE.explainers.map(card).join("")}</div>`)
++(()=>{const s=sandwichWeek().shop;return band(`<a class="eyebrow" href="sandwich.html">Sandwich Shop of the Week</a><h2>${esc(s.name)}</h2><p class="lede" style="margin-bottom:20px">${esc(s.hood)}, ${esc(s.city)} · Order the ${esc(s.items[0][0])}. A new San Francisco or Berkeley sandwich shop every Monday.</p><a class="btn" href="sandwich.html">See this week's pick →</a>`)})()
 +band(`<a class="eyebrow" href="sports.html">Sports</a><h2>Chargers, Nuggets, Avs and Buffs</h2><p class="lede" style="margin-bottom:20px">Live headlines, records and next games for the teams I follow.</p><a class="btn" href="sports.html">Latest news →</a>`)
 +(SITE.essays.length?band(`<a class="eyebrow" href="essays.html">Essays</a><h2>Writing and ideas</h2><a class="btn" href="essays.html">Read my essays →</a>`):"")
 +band(`<a class="eyebrow" href="cv.html">CV</a><h2>Experience and education</h2><div class="btns"><a class="btn" href="cv.html">View my CV →</a><a class="btn ghost" href="${SITE.linkedin}">LinkedIn ↗</a></div>`);
