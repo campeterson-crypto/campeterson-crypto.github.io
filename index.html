@@ -18,13 +18,29 @@
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=10">
 </head>
-<body><main id="m"></main><script src="site.js?v=8"></script><script src="sandwiches.js?v=8"></script><script>
+<body><main id="m" class="home"></main><script src="site.js?v=10"></script><script src="sandwiches.js?v=10"></script><script>
 shell("Home");
 const card=t=>`<a class="card" href="${t.url}"><span class="k">${t.k||"Tool"}</span><span class="t">${t.title}</span><span class="d">${t.desc}</span><span class="go">Open →</span></a>`;
 m.innerHTML=
- band(`<img class="portrait" src="${SITE.photo}" alt="${SITE.name}" width="120" height="120"><p class="intro">${SITE.intro}</p>`)
+ band(`<div class="hero-grid">
+ <div class="hero-copy">
+  <a class="new" href="private-credit.html"><b>New</b>Private Credit 101 →</a>
+  <h1 class="display">${SITE.name}</h1>
+  <p class="intro">${SITE.intro}</p>
+  <ul class="pills hero-pills"><li>Berkeley Haas MBA ’28</li><li>Finance &amp; fintech</li><li>Skier</li><li>Fly fisher</li><li>Sandwich hunter</li></ul>
+ </div>
+ <div class="hero-photo"><img src="${SITE.photo}" alt="${SITE.name}" width="320" height="320"></div>
+</div>`,"hero")
++band(`<p class="eyebrow">Timeline</p><ol class="tl">${[
+  ["Through 2018","Boulder High School","Boulder, CO","Where it all started"],
+  ["2018 – 2021","CU Boulder, Leeds","Boulder, CO","Finance and real estate degree"],
+  ["2021 – 2023","Deloitte FP&amp;A","Denver, CO","Analyst on the Alphabet account"],
+  ["2023 – 2025","Deloitte FP&amp;A","New York, NY","Consultant leading a US and India team"],
+  ["2025 – 2026","Churchill","New York, NY","Private credit fund modeling"],
+  ["2026 – now","Berkeley Haas","Berkeley, CA","First-year, full-time MBA"]
+ ].map((s,i,a)=>`<li${i==a.length-1?' class="now"':''}><span class="when">${s[0]}</span><b>${s[1]}</b><span class="where">${s[2]}</span><span class="blurb">${s[3]}</span></li>`).join("")}</ol>`,"tl-band")
 +band(`<a class="eyebrow" href="projects.html">Projects</a><h2>See what I'm building</h2><a class="btn" href="projects.html">View projects →</a>`)
 +band(`<a class="eyebrow" href="projects.html">AI Prompting Toolkit</a><h2>Tools for writing better prompts</h2><div class="cards">${SITE.tools.map(card).join("")}</div>`)
 +band(`<a class="eyebrow" href="budget.html">Personal Finance</a><h2>Plan where your money goes</h2><div class="cards">${SITE.finance.map(card).join("")}</div>`)
