@@ -15,6 +15,7 @@ const SITE={
     "Outside of work, I once rode a bike 4,350 miles from Seattle to Washington, D.C. to raise money for people with disabilities. I ski (Snowbird and Alta are my favorites), surf, golf, and fly fish whenever I can get to Key West. I'm also on the hunt for the best Dutch crunch sandwich in San Francisco; recommendations welcome."
   ],
   email:"campeterson44@gmail.com",
+  contactEmail:"cam_peterson@berkeley.edu",   // used by the Get in touch menu
   linkedin:"https://www.linkedin.com/in/cameronpeterson4/",
   // CV page only: this is where the numbers belong.
   experience:[
@@ -69,11 +70,24 @@ const SITE={
 const NAV=[["Home","index.html"],["Projects","projects.html"],["Sports","sports.html"],["Food","sandwich.html"],["Essays","essays.html"],["CV","cv.html"]];
 function shell(active){
   const nav=NAV.filter(l=>l[0]!="Essays"||SITE.essays.length);
+  const gmail="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to="+encodeURIComponent(SITE.contactEmail);
   document.body.insertAdjacentHTML("afterbegin",`<a class="skip" href="#m">Skip to content</a><header><div class="wrap">
   <a class="brand" href="${NAV[0][1]}"><img src="${SITE.photo}" alt="" width="28" height="28"><span>${SITE.name}</span></a>
-  <nav aria-label="Main">${nav.map(l=>`<a href="${l[1]}"${l[0]==active?' class="on" aria-current="page"':''}>${l[0]}</a>`).join("")}</nav><span class="hdr-sep" aria-hidden="true"></span><a class="cta" href="mailto:${SITE.email}">Get in touch</a></div></header>`);
+  <nav aria-label="Main">${nav.map(l=>`<a href="${l[1]}"${l[0]==active?' class="on" aria-current="page"':''}>${l[0]}</a>`).join("")}</nav><span class="hdr-sep" aria-hidden="true"></span>
+  <div class="contact"><button class="cta" id="ctaBtn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="ctaMenu">Get in touch</button>
+  <div class="cta-menu" id="ctaMenu" hidden>
+    <a href="${gmail}" target="_blank" rel="noopener"><span class="ck">Email me in Gmail</span><span class="cv">${SITE.contactEmail}</span></a>
+    <a href="${SITE.linkedin}" target="_blank" rel="noopener"><span class="ck">LinkedIn</span><span class="cv">${SITE.linkedin.replace(/^https:\/\/www\.|\/$/g,"")}</span></a>
+  </div></div></div></header>`);
   document.body.insertAdjacentHTML("beforeend",`<footer><div class="wrap">
   <span class="sel">${SITE.email}</span><a href="${SITE.linkedin}">LinkedIn</a><span>© ${new Date().getFullYear()} ${SITE.name}</span></div></footer>`);
+  // Get in touch dropdown: click to open; click away, Esc, or picking an option closes it
+  const btn=document.getElementById("ctaBtn"),menu=document.getElementById("ctaMenu");
+  const show=o=>{menu.hidden=!o;btn.setAttribute("aria-expanded",o)};
+  btn.addEventListener("click",()=>show(menu.hidden));
+  menu.addEventListener("click",e=>{if(e.target.closest("a"))show(false)});
+  document.addEventListener("click",e=>{if(!e.target.closest(".contact"))show(false)});
+  document.addEventListener("keydown",e=>{if(e.key=="Escape"&&!menu.hidden){show(false);btn.focus()}});
 }
 const band=(html,cls="")=>`<section class="band ${cls}"><div class="wrap">${html}</div></section>`;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
