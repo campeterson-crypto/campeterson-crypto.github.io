@@ -6,7 +6,7 @@ const SITE={
   name:"Cameron Peterson",
   photo:"headshot-sq.jpg",
   // Home page: keep it conversational, no resume stats.
-  intro:"Hi! I'm Cam. This site is where I keep my projects, a growing set of AI prompting tools, and my CV.",
+  intro:"Hi! I'm Cam, a first-year MBA student at UC Berkeley Haas. I've worked in private credit and in FP&A at Deloitte, and I'm currently pursuing strategic finance and strategy & operations roles in tech. Below are some of the fun AI projects I've been working on in my free time.",
   // Top of the CV page: the story, in plain sentences.
   about:[
     "I'm an MBA candidate at UC Berkeley's Haas School of Business, focused on corporate strategy and strategic finance roles in tech.",
