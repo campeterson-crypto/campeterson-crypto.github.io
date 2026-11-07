@@ -71,7 +71,7 @@ function shell(active){
   const nav=NAV.filter(l=>l[0]!="Essays"||SITE.essays.length);
   document.body.insertAdjacentHTML("afterbegin",`<a class="skip" href="#m">Skip to content</a><header><div class="wrap">
   <a class="brand" href="${NAV[0][1]}"><img src="${SITE.photo}" alt="" width="28" height="28"><span>${SITE.name}</span></a>
-  <nav aria-label="Main">${nav.map(l=>`<a href="${l[1]}"${l[0]==active?' class="on" aria-current="page"':''}>${l[0]}</a>`).join("")}</nav></div></header>`);
+  <nav aria-label="Main">${nav.map(l=>`<a href="${l[1]}"${l[0]==active?' class="on" aria-current="page"':''}>${l[0]}</a>`).join("")}</nav><span class="hdr-sep" aria-hidden="true"></span><a class="cta" href="mailto:${SITE.email}">Get in touch</a></div></header>`);
   document.body.insertAdjacentHTML("beforeend",`<footer><div class="wrap">
   <span class="sel">${SITE.email}</span><a href="${SITE.linkedin}">LinkedIn</a><span>© ${new Date().getFullYear()} ${SITE.name}</span></div></footer>`);
 }

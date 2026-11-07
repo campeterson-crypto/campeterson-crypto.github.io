@@ -520,7 +520,7 @@ main.home>.band.hero>.wrap{position:relative;padding-block:96px 72px}
 .display{font-size:clamp(44px,7vw,76px);line-height:1.02;letter-spacing:-.045em;font-weight:500;margin:22px 0 24px;
   background:linear-gradient(180deg,#fff 30%,#c9cdd2);-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero-copy .intro{font-size:19px;line-height:1.6;color:var(--soft);max-width:600px;letter-spacing:-.01em}
-.hero-pills{margin:26px 0 0}
+ul.hero-pills{margin:26px 0 0}
 
 /* timeline */
 main.home>.band.tl-band>.wrap{padding-block:56px 64px}
